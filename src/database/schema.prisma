@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  passwordHash  String
+  firstName     String?
+  lastName      String?
+  targetSalary  Int
+  weeklyRate    Float
+
+  profile       Profile?
+  subscription  Subscription?
+  applications  Application[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Profile {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id])
+
+  currentRole     String?
+  currentSalary   Int?
+  yearsExperience Int
+  location        String
+  linkedinUrl     String?
+  skills          Json
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Subscription {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id])
+
+  plan             String
+  status           String
+  weeklyRate       Float
+  nextBillingDate  DateTime
+
+  stripeCustomerId String?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Application {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+
+  jobTitle      String
+  company       String
+  jobUrl        String
+  status        String
+  appliedAt     DateTime @default(now())
+
+  matchScore    Float?
+  resumeVersion String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
