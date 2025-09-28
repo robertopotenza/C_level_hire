@@ -1,63 +1,32 @@
-# Executive Career Concierge - Landing Page
+# C-Level Hire AI Agent Platform
 
-A professional landing page for an Executive Auto-Apply Service designed specifically for C-level executives and senior leadership roles.
+## Democratizing Executive Job Search Tools
 
-## Features
+Transform your job search with AI-powered tools that were once exclusive to C-level executives, now available for just **0.1% of your target salary per week**.
 
-- **Professional Design**: Clean, minimalist design with executive color palette (Navy, Gold, White)
-- **Responsive Layout**: Fully responsive design optimized for desktop, tablet, and mobile
-- **Interactive Elements**: Smooth animations, hover effects, and micro-interactions
-- **Lead Capture Form**: Advanced form validation with real-time feedback
-- **Service Packages**: Clear pricing tiers for Core and Premium packages
-- **SEO Optimized**: Meta tags and semantic HTML structure
+### 🚀 Features
 
-## Sections
+- **Resume Tailor**: Three-layer optimization that beats ATS systems
+- **Self-Apply**: Intelligent application timing and campaign management
+- **Interview Intelligence**: AI-powered interview preparation
+- **Network Activation**: Strategic LinkedIn connection leveraging
+- **24/7 AI Agent**: Works autonomously while you sleep
 
-1. **Hero Section**: Compelling headline with call-to-action
-2. **Problem Section**: Executive job search challenges
-3. **Solution Section**: Three-step service approach
-4. **Services Section**: Core vs Premium package comparison
-5. **Why Choose Us**: Trust, technology, and exclusivity
-6. **Contact Form**: Lead capture with validation
-7. **Footer**: Contact information and links
+### 💰 Revolutionary Pricing
 
-## Technology Stack
+Our pricing scales with your ambition:
+- Target $50,000? Pay $50/week
+- Target $100,000? Pay $100/week
+- Target $200,000? Pay $200/week
 
-- **React 18**: Modern React with hooks
-- **Tailwind CSS**: Utility-first CSS framework
-- **Shadcn/UI**: High-quality UI components
-- **Lucide Icons**: Professional icon library
-- **Vite**: Fast build tool and development server
+**Commitment Discounts:**
+- Monthly: Save 15%
+- Quarterly: Save 25%
 
-## Getting Started
+### 🛠️ Tech Stack
 
-### Development
-
-```bash
-cd executive-landing
-pnpm install
-pnpm run dev
-```
-
-### Production Build
-
-```bash
-pnpm run build
-```
-
-## Design Guidelines
-
-- **Colors**: Navy (#0B1D39), Gold (#D4AF37), White, Gray (#EAEAEA)
-- **Typography**: Professional sans-serif fonts
-- **Style**: Minimal, executive-focused, high-trust
-- **Tone**: Exclusive, confidential, professional
-
-## Contact
-
-For inquiries about the Executive Career Concierge service:
-- Email: contact@executivecareer.com
-- All communications are confidential
-
----
-
-*Your confidential career agent.*
+- **Backend**: Node.js, TypeScript, Express
+- **Database**: PostgreSQL with Prisma ORM
+- **AI**: OpenAI GPT-4 for intelligent decisions
+- **Deployment**: Railway with automatic scaling
+- **Payments**: Stripe for subscription billing
