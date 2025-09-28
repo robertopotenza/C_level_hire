@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import jwt, { SignOptions, Secret } from 'jsonwebtoken';
 
 const router = Router();
 
@@ -31,10 +31,15 @@ router.post('/signup', async (req: Request, res: Response) => {
       weeklyRate
     };
 
+    const jwtSecret: Secret = process.env.JWT_SECRET || 'secret';
+    const signOptions: SignOptions = {
+      expiresIn: process.env.JWT_EXPIRES_IN || '7d'
+    };
+
     const token = jwt.sign(
       { userId: user.id, email: user.email },
-      process.env.JWT_SECRET || 'secret',
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+      jwtSecret,
+      signOptions
     );
 
     res.json({
@@ -61,10 +66,15 @@ router.post('/login', async (req: Request, res: Response) => {
   }
 
   try {
+    const jwtSecret: Secret = process.env.JWT_SECRET || 'secret';
+    const signOptions: SignOptions = {
+      expiresIn: process.env.JWT_EXPIRES_IN || '7d'
+    };
+
     const token = jwt.sign(
       { userId: 'user_123', email },
-      process.env.JWT_SECRET || 'secret',
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+      jwtSecret,
+      signOptions
     );
 
     res.json({
