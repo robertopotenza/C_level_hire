@@ -33,7 +33,7 @@ router.post('/signup', async (req: Request, res: Response) => {
 
     const jwtSecret: Secret = process.env.JWT_SECRET || 'secret';
     const signOptions: SignOptions = {
-      expiresIn: process.env.JWT_EXPIRES_IN || '7d'
+      expiresIn: process.env.JWT_EXPIRES_IN ? parseInt(process.env.JWT_EXPIRES_IN) : 7 * 24 * 60 * 60 // 7 days in seconds
     };
 
     const token = jwt.sign(
@@ -68,7 +68,7 @@ router.post('/login', async (req: Request, res: Response) => {
   try {
     const jwtSecret: Secret = process.env.JWT_SECRET || 'secret';
     const signOptions: SignOptions = {
-      expiresIn: process.env.JWT_EXPIRES_IN || '7d'
+      expiresIn: process.env.JWT_EXPIRES_IN ? parseInt(process.env.JWT_EXPIRES_IN) : 7 * 24 * 60 * 60 // 7 days in seconds
     };
 
     const token = jwt.sign(
