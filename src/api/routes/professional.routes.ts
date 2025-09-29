@@ -8,6 +8,11 @@ router.get('/professional', (req, res) => {
     res.sendFile(path.join(__dirname, '../../../public/professional.html'));
 });
 
+// Rev1 interface - Enterprise-grade split-screen design
+router.get('/rev1', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../../public/rev1.html'));
+});
+
 // API endpoints for professional interface
 router.get('/api/professional/stats', (req, res) => {
     res.json({
