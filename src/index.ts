@@ -143,9 +143,9 @@ async function startServer() {
       console.log('🌍 Starting server in limited mode...');
       
       // Start the HTTP server without database
-      httpServer.listen(PORT, () => {
+      httpServer.listen(Number(PORT), '0.0.0.0', () => {
         console.log('✅ Server running in limited mode (no database)');
-        console.log(`🌍 Server running at: http://localhost:${PORT}`);
+        console.log(`🌍 Server running on port ${PORT}`);
       });
       return;
     }
@@ -160,9 +160,9 @@ async function startServer() {
     console.log('✅ AI Agent orchestrator started');
 
     // Start the HTTP server
-    httpServer.listen(PORT, () => {
+    httpServer.listen(Number(PORT), '0.0.0.0', () => {
       console.log('✅ All systems operational');
-      console.log(`🌍 Server running at: http://localhost:${PORT}`);
+      console.log(`🌍 Server running on port ${PORT}`);
     });
     
   } catch (error) {

@@ -2,16 +2,24 @@ const { spawn, execSync } = require('child_process');
 
 console.log('🚀 Starting C-Level Hire AI Agent Platform...');
 
-// Function to wait for DATABASE_URL
-function waitForDatabaseUrl() {
-  return new Promise((resolve) => {
+// Function to wait for DATABASE_URL with timeout
+function waitForDatabaseUrl(timeoutMs = 60000) {
+  return new Promise((resolve, reject) => {
+    const startTime = Date.now();
+    
     const checkInterval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      
       if (process.env.DATABASE_URL) {
         clearInterval(checkInterval);
         console.log('✅ DATABASE_URL found');
         resolve();
+      } else if (elapsed > timeoutMs) {
+        clearInterval(checkInterval);
+        console.log('⚠️ DATABASE_URL not found within timeout, starting without database');
+        resolve(); // Don't reject, just continue without DB
       } else {
-        console.log('⏳ Waiting for DATABASE_URL to be available...');
+        console.log(`⏳ Waiting for DATABASE_URL... (${Math.round((timeoutMs - elapsed) / 1000)}s remaining)`);
       }
     }, 2000);
   });
@@ -49,21 +57,27 @@ function startApplication() {
 // Main startup sequence
 async function startup() {
   try {
-    // Wait for DATABASE_URL
-    await waitForDatabaseUrl();
+    // Wait for DATABASE_URL (with timeout)
+    await waitForDatabaseUrl(30000); // 30 second timeout
     
-    // Run migrations
-    const migrationSuccess = await runMigrations();
-    if (!migrationSuccess) {
-      process.exit(1);
+    // Run migrations only if DATABASE_URL is available
+    if (process.env.DATABASE_URL) {
+      console.log('🗄️ DATABASE_URL available, running migrations...');
+      const migrationSuccess = await runMigrations();
+      if (!migrationSuccess) {
+        console.log('⚠️ Migrations failed, but continuing to start server...');
+      }
+    } else {
+      console.log('⚠️ No DATABASE_URL found, starting server without database features');
     }
     
-    // Start application
+    // Start application regardless of database status
     startApplication();
     
   } catch (error) {
     console.error('Startup failed:', error);
-    process.exit(1);
+    console.log('🚀 Attempting to start server anyway...');
+    startApplication();
   }
 }
 
