@@ -23,6 +23,18 @@ Our pricing scales with your ambition:
 - Monthly: Save 15%
 - Quarterly: Save 25%
 
+### 📄 Available Landing Pages
+
+Explore our different landing page versions in the `/public` directory:
+
+- **[index.html](public/index.html)** - Main landing page
+- **[professional.html](public/professional.html)** - Professional-focused version
+- **[rev1.html](public/rev1.html)** - Revision 1 landing page
+- **[rev2.html](public/rev2.html)** - Revision 2 with Job Autopilot Hub branding
+- **[rev3.html](public/rev3.html)** - Revision 3 with enhanced features
+- **[rev3-production.html](public/rev3-production.html)** - Production-ready Rev3 interface
+- **[rev4execmanus.html](public/rev4execmanus.html)** - ⭐ **State-of-the-art webpage** with modern animations, glassmorphism effects, scroll-reveal interactions, and enhanced UX (Latest)
+
 ### 🛠️ Tech Stack
 
 - **Backend**: Node.js, TypeScript, Express
@@ -30,3 +42,4 @@ Our pricing scales with your ambition:
 - **AI**: OpenAI GPT-4 for intelligent decisions
 - **Deployment**: Railway with automatic scaling
 - **Payments**: Stripe for subscription billing
+- **Frontend**: Modern HTML5, CSS3 with animations, vanilla JavaScript
