@@ -174,8 +174,29 @@
         .hero-subtitle {
             font-size: 1.25rem;
             opacity: 0.9;
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.5rem;
             line-height: 1.6;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            opacity: 0.85;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .pricing-teaser {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .pricing-teaser p {
+            margin: 0;
+            font-size: 1rem;
+            color: white;
         }
 
         .hero-cta {
@@ -311,12 +332,236 @@
         .feature-description {
             color: var(--text-secondary);
             line-height: 1.6;
+            margin-bottom: 1rem;
         }
 
-        /* AI Platform Section */
-        .ai-platform {
+        .fomo-card {
+            position: relative;
+            border-left: 4px solid var(--accent-orange);
+        }
+
+        .fomo-card:hover {
+            border-left-color: var(--primary-blue);
+        }
+
+        .fomo-tag {
+            background: var(--accent-orange);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        .feature-description strong {
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
             padding: 6rem 0;
             background: var(--background-light);
+        }
+
+        .pricing-calculator {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: var(--shadow-medium);
+            text-align: center;
+        }
+
+        .calculator-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .calculator-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .input-group {
+            margin-bottom: 2rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .salary-input {
+            width: 300px;
+            padding: 1rem 1rem 1rem 2.5rem;
+            font-size: 1.25rem;
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .salary-input:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .calculate-btn {
+            padding: 1rem 2rem;
+            background: var(--gradient-blue);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .pricing-result {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            margin-top: 2rem;
+        }
+
+        .pricing-result.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .result-card {
+            background: var(--background-light);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 1rem;
+        }
+
+        .weekly-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .price-label {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .price-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+        }
+
+        .price-breakdown {
+            margin-bottom: 1.5rem;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .breakdown-item.highlight {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .value-proposition {
+            background: rgba(0, 102, 204, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .roi-message {
+            margin: 0;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .roi-message i {
+            color: var(--primary-blue);
+            margin-right: 0.5rem;
+        }
+
+        .pricing-examples {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .pricing-examples h4 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .example-card {
+            background: var(--background-light);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .example-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        .example-salary {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .example-weekly {
+            color: var(--primary-blue);
+            font-weight: 600;
+            font-size: 0.9rem;
         }
 
         .platform-content {
@@ -525,10 +770,37 @@
         .cta-content p {
             font-size: 1.1rem;
             opacity: 0.9;
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.5rem;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+        }
+
+        .democratization-message {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin: 2rem auto;
+            max-width: 700px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .democratization-message p {
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .democratization-message p:last-child {
+            margin-bottom: 0;
+        }
+
+        .democratization-message i {
+            color: var(--accent-orange);
+            font-size: 1.1rem;
         }
 
         .cta-buttons {
@@ -624,6 +896,46 @@
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .calculator-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .salary-input {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .calculate-btn {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .weekly-price {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .democratization-message p {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .pricing-teaser {
+                padding: 0.75rem 1rem;
+            }
+
+            .fomo-tag {
+                font-size: 0.75rem;
+                padding: 0.2rem 0.6rem;
+            }
         }
 
         /* Animations */
@@ -684,13 +996,19 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content container">
-            <h1 class="hero-title">The future works here.</h1>
+            <h1 class="hero-title">Democratizing Job Search Tools</h1>
             <p class="hero-subtitle">
-                We're changing how the world works by pairing the potential of C-level executives with AI-powered talent intelligence.
+                What used to be exclusive to C-level executives is now available to everyone.
             </p>
+            <p class="hero-description">
+                AI has leveled the playing field. Transform your career search with tools once costing thousands—now affordable for all.
+            </p>
+            <div class="pricing-teaser">
+                <p><strong>👉 Just enter your target salary and instantly see your weekly price.</strong></p>
+            </div>
             <div class="hero-cta">
-                <a href="#demo" class="btn-primary btn-large">Book a Demo</a>
-                <a href="#overview" class="btn-secondary btn-large">Platform Overview</a>
+                <a href="#pricing" class="btn-primary btn-large">Calculate My Weekly Price</a>
+                <a href="#features" class="btn-secondary btn-large">See All Features</a>
             </div>
         </div>
     </section>
@@ -727,119 +1045,165 @@
         </div>
     </section>
 
-    <!-- Platform Features -->
-    <section class="features-section" id="platform">
+    <!-- Features With FOMO Messaging -->
+    <section class="features-section" id="features">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">AI that interviews, evaluates, and connects for you</h2>
+                <h2 class="section-title">💡 Features With FOMO Messaging</h2>
                 <p class="section-subtitle">
-                    Agentic AI evaluates executives and matches top talent so you can focus on strategic decisions and accelerated career growth.
+                    Don't get left behind while others accelerate their careers with these powerful tools.
                 </p>
             </div>
             <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h3 class="feature-title">AI-Powered Matching</h3>
-                    <p class="feature-description">
-                        Our advanced AI analyzes 500+ data points to match executives with roles that align with their experience, aspirations, and cultural fit preferences.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                    <h3 class="feature-title">Executive Network Access</h3>
-                    <p class="feature-description">
-                        Connect directly with hiring decision makers, board members, and executive search firms through our verified network of C-suite professionals.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3 class="feature-title">Market Intelligence</h3>
-                    <p class="feature-description">
-                        Access real-time salary data, industry trends, and competitive analysis to negotiate from a position of strength and market knowledge.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-handshake"></i>
-                    </div>
-                    <h3 class="feature-title">Negotiation Support</h3>
-                    <p class="feature-description">
-                        Expert guidance on salary, equity, and benefits negotiation backed by data-driven insights and successful executive placement experience.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="feature-title">Confidential Search</h3>
-                    <p class="feature-description">
-                        Discreet executive search process that protects your current position while exploring opportunities for career advancement.
-                    </p>
-                </div>
-                <div class="feature-card">
+                <div class="feature-card fomo-card">
                     <div class="feature-icon">
                         <i class="fas fa-rocket"></i>
                     </div>
-                    <h3 class="feature-title">Fast-Track Placement</h3>
+                    <h3 class="feature-title">🚀 Resume Tailor</h3>
                     <p class="feature-description">
-                        Accelerated placement process with dedicated support to secure your next C-level role in 18 days average time to offer.
+                        Beat ATS filters with three-layer optimization. <strong>Over 10,000 job seekers have tailored resumes that get noticed</strong>—don't let yours get lost in the stack.
                     </p>
+                    <div class="fomo-tag">10,000+ success stories</div>
+                </div>
+                <div class="feature-card fomo-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="feature-title">🤖 Self-Apply</h3>
+                    <p class="feature-description">
+                        Automate applications with intelligent timing. <strong>Users are applying to 50+ jobs daily with zero effort</strong>—why are you still applying manually?
+                    </p>
+                    <div class="fomo-tag">50+ daily applications</div>
+                </div>
+                <div class="feature-card fomo-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="feature-title">📄 Custom Resume Tool</h3>
+                    <p class="feature-description">
+                        Craft unlimited tailored resumes instantly. <strong>Thousands are creating job-specific resumes in seconds</strong>—start standing out today.
+                    </p>
+                    <div class="fomo-tag">Unlimited resumes</div>
+                </div>
+                <div class="feature-card fomo-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3 class="feature-title">🎤 Interview Intelligence</h3>
+                    <p class="feature-description">
+                        Ace interviews with AI-powered prep. <strong>80% of users report nailing interviews</strong>—don't walk in unprepared.
+                    </p>
+                    <div class="fomo-tag">80% success rate</div>
+                </div>
+                <div class="feature-card fomo-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3 class="feature-title">🔗 Network Activation</h3>
+                    <p class="feature-description">
+                        Grow your LinkedIn network with smart outreach. <strong>Connect with hiring managers while others are stuck sending cold emails.</strong>
+                    </p>
+                    <div class="fomo-tag">Smart networking</div>
+                </div>
+                <div class="feature-card fomo-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="feature-title">🕒 24/7 AI Agent</h3>
+                    <p class="feature-description">
+                        Works non-stop to tailor resumes and manage campaigns. <strong>Your competition's AI is hustling while you sleep</strong>—join them now.
+                    </p>
+                    <div class="fomo-tag">Never stops working</div>
+                </div>
+                <div class="feature-card fomo-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3 class="feature-title">⚡ Seamless Integrations</h3>
+                    <p class="feature-description">
+                        Syncs with Google, Slack, Salesforce, ADP, and more. <strong>Top professionals integrate their tools effortlessly</strong>—why aren't you?
+                    </p>
+                    <div class="fomo-tag">20+ integrations</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- AI Platform Deep Dive -->
-    <section class="ai-platform">
+    <!-- Dynamic Pricing Section -->
+    <section class="pricing-section" id="pricing">
         <div class="container">
-            <div class="platform-content">
-                <div class="platform-text">
-                    <h2>One system of intelligence, fed by executive career data</h2>
-                    <p>
-                        Our Talent Intelligence Platform is built with native AI at the core to deliver 
-                        the personalized experiences you need to accelerate your executive career — and 
-                        transform your professional trajectory.
-                    </p>
-                    <ul class="platform-features">
-                        <li><i class="fas fa-check"></i> Real-time job market analysis across 500+ companies</li>
-                        <li><i class="fas fa-check"></i> Predictive career pathing and opportunity scoring</li>
-                        <li><i class="fas fa-check"></i> Automated application optimization and submission</li>
-                        <li><i class="fas fa-check"></i> Executive compensation benchmarking</li>
-                        <li><i class="fas fa-check"></i> Cultural fit assessment and company matching</li>
-                    </ul>
-                    <a href="#demo" class="btn-primary">Experience the Platform</a>
-                </div>
-                <div class="platform-visual">
-                    <div class="demo-interface">
-                        <div class="demo-header">
-                            <div class="demo-avatar">AI</div>
-                            <div class="demo-info">
-                                <h4>Executive Career Agent</h4>
-                                <p>Analyzing market opportunities...</p>
+            <div class="section-header">
+                <h2 class="section-title">💰 Pricing Section</h2>
+                <p class="section-subtitle">
+                    Dynamic Pricing Model - Simple, fair, and affordable—no hidden costs
+                </p>
+            </div>
+            <div class="pricing-calculator">
+                <div class="calculator-card">
+                    <h3 class="calculator-title">Type in your annual target salary ($)</h3>
+                    <p class="calculator-subtitle">Your weekly fee = 0.1% of that salary</p>
+                    
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <span class="currency-symbol">$</span>
+                            <input 
+                                type="number" 
+                                id="salary-input" 
+                                placeholder="100000" 
+                                min="0" 
+                                step="1000"
+                                class="salary-input"
+                            >
+                        </div>
+                        <button class="calculate-btn" onclick="calculateWeeklyPrice()">
+                            Calculate My Weekly Price
+                        </button>
+                    </div>
+                    
+                    <div class="pricing-result" id="pricing-result">
+                        <div class="result-card">
+                            <div class="weekly-price">
+                                <span class="price-label">Your Weekly Investment:</span>
+                                <span class="price-value" id="weekly-price">$0</span>
+                            </div>
+                            <div class="price-breakdown">
+                                <div class="breakdown-item">
+                                    <span>Daily cost:</span>
+                                    <span id="daily-price">$0</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span>Monthly cost:</span>
+                                    <span id="monthly-price">$0</span>
+                                </div>
+                                <div class="breakdown-item highlight">
+                                    <span>Annual target:</span>
+                                    <span id="annual-target">$0</span>
+                                </div>
+                            </div>
+                            <div class="value-proposition">
+                                <p class="roi-message" id="roi-message">
+                                    <i class="fas fa-chart-line"></i>
+                                    <strong>ROI:</strong> If we help you achieve your target salary, 
+                                    your investment pays for itself in <span id="roi-days">0</span> days!
+                                </p>
                             </div>
                         </div>
-                        <div class="demo-metrics">
-                            <div class="demo-metric">
-                                <div class="demo-metric-value" id="live-matches">47</div>
-                                <div class="demo-metric-label">Active Matches</div>
+                    </div>
+
+                    <div class="pricing-examples">
+                        <h4>Quick Examples:</h4>
+                        <div class="examples-grid">
+                            <div class="example-card" onclick="setExampleSalary(50000)">
+                                <div class="example-salary">$50,000</div>
+                                <div class="example-weekly">$50/week</div>
                             </div>
-                            <div class="demo-metric">
-                                <div class="demo-metric-value">$750K</div>
-                                <div class="demo-metric-label">Avg Opportunity</div>
+                            <div class="example-card" onclick="setExampleSalary(100000)">
+                                <div class="example-salary">$100,000</div>
+                                <div class="example-weekly">$100/week</div>
                             </div>
-                            <div class="demo-metric">
-                                <div class="demo-metric-value">98%</div>
-                                <div class="demo-metric-label">Fit Score</div>
-                            </div>
-                            <div class="demo-metric">
-                                <div class="demo-metric-value">12 days</div>
-                                <div class="demo-metric-label">Time to Interview</div>
+                            <div class="example-card" onclick="setExampleSalary(150000)">
+                                <div class="example-salary">$150,000</div>
+                                <div class="example-weekly">$150/week</div>
                             </div>
                         </div>
                     </div>
@@ -867,11 +1231,15 @@
     <section class="cta-section" id="demo">
         <div class="container">
             <div class="cta-content">
-                <h2>Putting the power of agentic AI at your fingertips</h2>
-                <p>Ready to accelerate your executive career to its highest potential?</p>
+                <h2>✅ Ready to transform your job search?</h2>
+                <p>Take control with the same tools top executives use—now affordable for all.</p>
+                <div class="democratization-message">
+                    <p><i class="fas fa-unlock"></i> <strong>What used to cost $10,000+ is now accessible at 0.1% of your target salary</strong></p>
+                    <p><i class="fas fa-users"></i> Join thousands who've democratized their career advancement</p>
+                </div>
                 <div class="cta-buttons">
-                    <a href="#" class="btn-primary btn-large" onclick="bookDemo()">Book a Demo</a>
-                    <a href="#" class="btn-secondary btn-large" onclick="getInTouch()">Get in Touch</a>
+                    <a href="#" class="btn-primary btn-large" onclick="getStarted()">Get Started Now</a>
+                    <a href="#pricing" class="btn-secondary btn-large">Calculate My Price</a>
                 </div>
             </div>
         </div>
@@ -1115,15 +1483,56 @@
             });
         }
 
-        function bookDemo() {
-            // In a real application, this would open a demo booking modal
-            alert('Demo booking would open here. For now, experience the hyper-personalized interface at: ' + window.location.origin);
+        function calculateWeeklyPrice() {
+            const salaryInput = document.getElementById('salary-input');
+            const salary = parseFloat(salaryInput.value);
+            
+            if (!salary || salary < 1000) {
+                alert('Please enter a valid target salary (minimum $1,000)');
+                return;
+            }
+
+            // Calculate pricing (0.1% of annual salary per week)
+            const weeklyPrice = Math.round((salary * 0.001) * 100) / 100;
+            const dailyPrice = Math.round((weeklyPrice / 7) * 100) / 100;
+            const monthlyPrice = Math.round((weeklyPrice * 4.33) * 100) / 100;
+            const roiDays = Math.round((weeklyPrice * 52) / (salary / 365));
+
+            // Update the display
+            document.getElementById('weekly-price').textContent = `$${weeklyPrice.toLocaleString()}`;
+            document.getElementById('daily-price').textContent = `$${dailyPrice.toLocaleString()}`;
+            document.getElementById('monthly-price').textContent = `$${monthlyPrice.toLocaleString()}`;
+            document.getElementById('annual-target').textContent = `$${salary.toLocaleString()}`;
+            document.getElementById('roi-days').textContent = roiDays;
+
+            // Show the result
+            document.getElementById('pricing-result').classList.add('show');
+
+            // Scroll to result
+            document.getElementById('pricing-result').scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
         }
 
-        function getInTouch() {
-            // In a real application, this would open a contact form
-            alert('Contact form would open here. For now, visit the main interface at: ' + window.location.origin);
+        function setExampleSalary(salary) {
+            document.getElementById('salary-input').value = salary;
+            calculateWeeklyPrice();
         }
+
+        function getStarted() {
+            // In a real application, this would start the onboarding process
+            alert('Registration would start here. For now, try the hyper-personalized interface at: ' + window.location.origin);
+        }
+
+        // Allow Enter key to calculate price
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('salary-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    calculateWeeklyPrice();
+                }
+            });
+        });
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
