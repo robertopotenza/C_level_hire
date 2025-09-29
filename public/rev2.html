@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C-Level Hire | Democratizing Job Search Tools</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --navy-primary: #1a365d;
+            --navy-secondary: #2c5282;
+            --navy-light: #4299e1;
+            --white: #ffffff;
+            --gray-50: #f7fafc;
+            --gray-100: #edf2f7;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e0;
+            --gray-400: #a0aec0;
+            --gray-500: #718096;
+            --gray-600: #4f5d75;
+            --gray-700: #2d3748;
+            --gray-800: #1a202c;
+            --accent-gold: #f6d55c;
+            --success-green: #48bb78;
+            --gradient-subtle: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+            --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-strong: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Sticky Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--gray-200);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--navy-primary);
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--navy-light);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-600);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--navy-primary);
+        }
+
+        .cta-primary {
+            background: var(--navy-primary);
+            color: var(--white);
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cta-primary:hover {
+            background: var(--navy-secondary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Container System */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .container-narrow {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Split-Screen Hero */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 8rem 0 4rem;
+            background: var(--white);
+        }
+
+        .hero-content {
+            padding-right: 4rem;
+        }
+
+        .hero-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--navy-primary);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .pricing-teaser {
+            background: rgba(26, 54, 93, 0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            border: 1px solid rgba(26, 54, 93, 0.2);
+        }
+
+        .pricing-teaser p {
+            margin: 0;
+            color: var(--navy-primary);
+            font-size: 1rem;
+        }
+
+        .hero-cta {
+            margin-bottom: 3rem;
+        }
+
+        .cta-large {
+            padding: 1.25rem 3rem;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .hero-trust {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--gray-500);
+            font-size: 0.9rem;
+        }
+
+        .trust-logos {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            opacity: 0.7;
+        }
+
+        .trust-logo {
+            height: 24px;
+            width: auto;
+            filter: grayscale(100%);
+        }
+
+        /* Product Visual */
+        .product-mockup {
+            width: 100%;
+            max-width: 600px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-mockup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--navy-light), var(--accent-gold));
+        }
+
+        .mockup-header {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .mockup-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--navy-primary);
+        }
+
+        .mockup-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--success-green);
+            font-size: 0.9rem;
+            margin-left: auto;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .mockup-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--navy-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 0;
+        }
+
+        .section:nth-child(even) {
+            background: var(--gray-50);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 3vw, 3rem);
+            font-weight: 800;
+            color: var(--navy-primary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Value Proposition */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .value-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-subtle);
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-200);
+        }
+
+        .value-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .value-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--navy-primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .value-icon i {
+            font-size: 1.75rem;
+            color: var(--white);
+        }
+
+        .value-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-bottom: 1rem;
+        }
+
+        .value-description {
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* Enterprise Proof */
+        .enterprise-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--navy-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: var(--gray-600);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        /* Trust Signals */
+        .trust-section {
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .certifications {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .cert-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--gray-50);
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .cert-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--navy-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cert-icon i {
+            color: var(--white);
+            font-size: 1.25rem;
+        }
+
+        .cert-info h4 {
+            font-weight: 600;
+            color: var(--navy-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .cert-info p {
+            color: var(--gray-500);
+            font-size: 0.9rem;
+        }
+
+        /* Customer Stories */
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-subtle);
+            position: relative;
+        }
+
+        .testimonial-quote {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--gray-700);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--navy-light), var(--navy-primary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .author-info h4 {
+            font-weight: 600;
+            color: var(--navy-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            color: var(--gray-500);
+            font-size: 0.9rem;
+        }
+
+        /* Final CTA */
+        .final-cta {
+            background: var(--navy-primary);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .final-cta .section-title,
+        .final-cta .section-subtitle {
+            color: var(--white);
+        }
+
+        .final-cta .section-subtitle {
+            opacity: 0.9;
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Pricing Modal */
+        .pricing-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray-400);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: var(--gray-100);
+            color: var(--gray-600);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 6rem 0 4rem;
+            }
+
+            .hero-content {
+                padding-right: 0;
+                margin-bottom: 3rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container, .container-narrow {
+                padding: 0 1rem;
+            }
+
+            .nav {
+                padding: 1rem;
+            }
+
+            .hero {
+                padding: 5rem 0 3rem;
+            }
+
+            .section {
+                padding: 4rem 0;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .value-grid,
+            .enterprise-stats,
+            .testimonials {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--navy-light);
+            color: var(--white);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="/" class="logo">
+                <i class="fas fa-brain"></i>
+                C-Level Hire
+            </a>
+            <ul class="nav-links">
+                <li><a href="#value">Value</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#enterprise">Enterprise</a></li>
+                <li><a href="#customers">Customers</a></li>
+            </ul>
+            <button class="cta-primary" onclick="openPricingModal()">
+                <i class="fas fa-calculator"></i>
+                See My Price
+            </button>
+        </nav>
+    </header>
+
+    <!-- Split-Screen Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Democratizing Job Search Tools</h1>
+                <p class="hero-subtitle">
+                    What used to be exclusive to C-level executives is now available to everyone.
+                </p>
+                <p class="hero-description">
+                    AI has leveled the playing field. Transform your career search with tools once costing thousands—now affordable for all.
+                </p>
+                <div class="pricing-teaser">
+                    <p><strong>👉 Just enter your target salary and instantly see your weekly price.</strong></p>
+                </div>
+                <div class="hero-cta">
+                    <button class="cta-primary cta-large" onclick="openPricingModal()">
+                        <i class="fas fa-calculator"></i>
+                        See My Price
+                    </button>
+                </div>
+                <div class="hero-trust">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Trusted by 10,000+ job seekers</span>
+                    <div class="trust-logos">
+                        <span style="font-weight: 600; color: var(--gray-400);">Fortune 500</span>
+                        <span style="font-weight: 600; color: var(--gray-400);">DoD</span>
+                        <span style="font-weight: 600; color: var(--gray-400);">Enterprise</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="product-mockup">
+                <div class="mockup-header">
+                    <div class="mockup-title">Executive Career Dashboard</div>
+                    <div class="mockup-status">
+                        <div class="status-dot"></div>
+                        Active
+                    </div>
+                </div>
+                <div class="mockup-metrics">
+                    <div class="metric-card">
+                        <div class="metric-value" id="hero-matches">47</div>
+                        <div class="metric-label">Active Matches</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">$750K</div>
+                        <div class="metric-label">Avg Opportunity</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">98%</div>
+                        <div class="metric-label">Success Rate</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">18</div>
+                        <div class="metric-label">Days to Offer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section class="section" id="value">
+        <div class="container-narrow">
+            <div class="section-header">
+                <h2 class="section-title">Job Search Tools for Everyone</h2>
+                <p class="section-subtitle">
+                    AI has leveled the playing field. Transform your career search with tools once costing thousands—now affordable for all.
+                </p>
+            </div>
+            <div class="value-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="value-title">🚀 Resume Tailor</h3>
+                    <p class="value-description">
+                        Beat ATS filters with three-layer optimization. <strong>Over 10,000 job seekers have tailored resumes that get noticed</strong>—don't let yours get lost in the stack.
+                    </p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="value-title">🤖 Self-Apply</h3>
+                    <p class="value-description">
+                        Automate applications with intelligent timing. <strong>Users are applying to 50+ jobs daily with zero effort</strong>—why are you still applying manually?
+                    </p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="value-title">📄 Custom Resume Tool</h3>
+                    <p class="value-description">
+                        Craft unlimited tailored resumes instantly. <strong>Thousands are creating job-specific resumes in seconds</strong>—start standing out today.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" id="features">
+        <div class="container-narrow">
+            <div class="section-header">
+                <h2 class="section-title">Don't Get Left Behind</h2>
+                <p class="section-subtitle">
+                    While others struggle with outdated job search methods, these tools give you the competitive edge you need to succeed.
+                </p>
+            </div>
+            <div class="value-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="value-title">🕒 24/7 AI Agent</h3>
+                    <p class="value-description">
+                        Works non-stop to tailor resumes and manage campaigns. <strong>Your competition's AI is hustling while you sleep</strong>—join them now.
+                    </p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3 class="value-title">🎤 Interview Intelligence</h3>
+                    <p class="value-description">
+                        Ace interviews with AI-powered prep. <strong>80% of users report nailing interviews</strong>—don't walk in unprepared.
+                    </p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3 class="value-title">🔗 Network Activation</h3>
+                    <p class="value-description">
+                        Grow your LinkedIn network with smart outreach. <strong>Connect with hiring managers while others are stuck sending cold emails.</strong>
+                    </p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="value-title">📊 Salary Intelligence</h3>
+                    <p class="value-description">
+                        Know your worth with real-time market data. <strong>Users negotiate 30% higher salaries</strong> with data-driven insights.
+                    </p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="value-title">⚡ Speed Applications</h3>
+                    <p class="value-description">
+                        Apply faster than humanly possible. <strong>While you apply to 5 jobs, our users apply to 50+</strong>—the math speaks for itself.
+                    </p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3 class="value-title">🔌 Seamless Integrations</h3>
+                    <p class="value-description">
+                        Syncs with Google, Slack, LinkedIn, and more. <strong>Top professionals integrate their tools effortlessly</strong>—why aren't you?
+                    </p>
+                </div>
+            </div>
+            <div class="section-header" style="margin-top: 4rem;">
+                <button class="cta-primary cta-large" onclick="openPricingModal()">
+                    <i class="fas fa-calculator"></i>
+                    See My Price
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enterprise Proof -->
+    <section class="section" id="enterprise">
+        <div class="container-narrow">
+            <div class="section-header">
+                <h2 class="section-title">Results That Speak for Themselves</h2>
+                <p class="section-subtitle">
+                    Real performance metrics from job seekers at every level who transformed their careers with our platform.
+                </p>
+            </div>
+            <div class="enterprise-stats">
+                <div class="stat-card">
+                    <div class="stat-number">1.6B+</div>
+                    <div class="stat-label">Career Trajectories Analyzed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="executives-placed">1,247</div>
+                    <div class="stat-label">Job Seekers Successfully Placed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">127%</div>
+                    <div class="stat-label">Average Salary Increase</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">18</div>
+                    <div class="stat-label">Days Average Time to Offer</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">98.4%</div>
+                    <div class="stat-label">Client Satisfaction Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">Fortune 500</div>
+                    <div class="stat-label">Enterprise Client Base</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Signals -->
+    <section class="section trust-section">
+        <div class="container-narrow">
+            <div class="section-header">
+                <h2 class="section-title">Enterprise Security & Compliance</h2>
+                <p class="section-subtitle">
+                    Built to meet the highest standards of enterprise security and regulatory compliance.
+                </p>
+            </div>
+            <div class="certifications">
+                <div class="cert-card">
+                    <div class="cert-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="cert-info">
+                        <h4>FedRAMP Authorized</h4>
+                        <p>Government-grade security standards</p>
+                    </div>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="cert-info">
+                        <h4>ISO 27001 Certified</h4>
+                        <p>International security management</p>
+                    </div>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="cert-info">
+                        <h4>SOC 2 Type II</h4>
+                        <p>Continuous security monitoring</p>
+                    </div>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="cert-info">
+                        <h4>GDPR Compliant</h4>
+                        <p>Global privacy protection standards</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Stories -->
+    <section class="section" id="customers">
+        <div class="container-narrow">
+            <div class="section-header">
+                <h2 class="section-title">Success Stories Across All Levels</h2>
+                <p class="section-subtitle">
+                    Real results from job seekers at every career stage who transformed their search with our democratized tools.
+                </p>
+            </div>
+            <div class="testimonials">
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">
+                        "The resume optimization was game-changing. Got past ATS filters and landed my dream tech role in 2 weeks with a 40% salary increase."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SC</div>
+                        <div class="author-info">
+                            <h4>Sarah Chen</h4>
+                            <p>Senior Software Engineer, Tech Startup</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">
+                        "The salary intelligence and negotiation prep helped me secure a $25K salary bump. The weekly cost paid for itself in the first month."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MR</div>
+                        <div class="author-info">
+                            <h4>Michael Rodriguez</h4>
+                            <p>Marketing Manager, E-commerce Company</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">
+                        "Finally, job search tools that actually work for regular people. Applied to 50+ jobs effortlessly and landed 3 offers in one month."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JT</div>
+                        <div class="author-info">
+                            <h4>Jennifer Taylor</h4>
+                            <p>Project Manager, Healthcare Services</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-header" style="margin-top: 4rem;">
+                <button class="cta-primary cta-large" onclick="openPricingModal()">
+                    <i class="fas fa-calculator"></i>
+                    See My Price
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="section final-cta">
+        <div class="container-narrow">
+            <div class="section-header">
+                <h2 class="section-title">Ready to Transform Your Job Search?</h2>
+                <p class="section-subtitle">
+                    Join 10,000+ job seekers who've democratized their career advancement with AI-powered tools now affordable for everyone.
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+                    <button class="cta-primary cta-large" onclick="openPricingModal()">
+                        <i class="fas fa-calculator"></i>
+                        See My Price
+                    </button>
+                    <button class="cta-secondary cta-large">
+                        <i class="fas fa-calendar"></i>
+                        Book Executive Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Modal -->
+    <div class="pricing-modal" id="pricing-modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closePricingModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h3 class="modal-title">Job Search Pricing Calculator</h3>
+                <p style="color: var(--gray-600); margin-bottom: 2rem;">
+                    Enter your target annual salary to see your affordable weekly investment. Just 0.1% of your target salary per week.
+                </p>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--navy-primary);">
+                    Target Annual Salary
+                </label>
+                <div style="position: relative;">
+                    <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--gray-500); font-weight: 600;">$</span>
+                    <input 
+                        type="number" 
+                        id="modal-salary-input" 
+                        placeholder="250000"
+                        min="50000"
+                        step="5000"
+                        style="width: 100%; padding: 1rem 1rem 1rem 2rem; font-size: 1.1rem; border: 2px solid var(--gray-300); border-radius: 8px; outline: none;"
+                    >
+                </div>
+            </div>
+
+            <button 
+                class="cta-primary" 
+                style="width: 100%; margin-bottom: 2rem; padding: 1rem;" 
+                onclick="calculateModalPrice()"
+            >
+                Calculate My Investment
+            </button>
+
+            <div id="modal-result" style="display: none;">
+                <div style="background: var(--gray-50); padding: 2rem; border-radius: 12px; text-align: center;">
+                    <div style="margin-bottom: 1rem;">
+                        <span style="color: var(--gray-600); font-size: 0.9rem;">Weekly Investment</span>
+                        <div style="font-size: 2.5rem; font-weight: 800; color: var(--navy-primary);" id="modal-weekly-price">$0</div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--gray-600);">
+                        <div>Daily: <span id="modal-daily-price">$0</span></div>
+                        <div>Monthly: <span id="modal-monthly-price">$0</span></div>
+                    </div>
+                    <div style="background: var(--navy-primary); color: white; padding: 1rem; border-radius: 8px;">
+                        <strong>ROI Timeline:</strong> Your investment pays for itself in <span id="modal-roi-days">0</span> days when you achieve your target salary.
+                    </div>
+                </div>
+                <button class="cta-primary" style="width: 100%; margin-top: 1.5rem; padding: 1rem;">
+                    Start My Job Search Transformation
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enterprise-grade functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeRevInterface();
+            setupScrollAnimations();
+            updateLiveMetrics();
+        });
+
+        function initializeRevInterface() {
+            // Check system health
+            fetch('/health')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('System Status:', data);
+                })
+                .catch(error => {
+                    console.log('System initializing...');
+                });
+
+            // Initialize live metrics
+            setInterval(updateLiveMetrics, 45000); // Update every 45 seconds
+        }
+
+        function updateLiveMetrics() {
+            // Update hero matches with realistic variation
+            const heroMatches = document.getElementById('hero-matches');
+            const executivesPlaced = document.getElementById('executives-placed');
+            
+            if (heroMatches) {
+                const currentMatches = parseInt(heroMatches.textContent);
+                const variation = Math.floor(Math.random() * 7) - 3; // -3 to +3
+                const newMatches = Math.max(40, Math.min(65, currentMatches + variation));
+                heroMatches.textContent = newMatches;
+            }
+
+            if (executivesPlaced) {
+                const current = parseInt(executivesPlaced.textContent.replace(',', ''));
+                const newCount = current + Math.floor(Math.random() * 3); // Gradual increase
+                executivesPlaced.textContent = newCount.toLocaleString();
+            }
+        }
+
+        function openPricingModal() {
+            document.getElementById('pricing-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePricingModal() {
+            document.getElementById('pricing-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function calculateModalPrice() {
+            const salaryInput = document.getElementById('modal-salary-input');
+            const salary = parseFloat(salaryInput.value);
+            
+            if (!salary || salary < 50000) {
+                alert('Please enter a valid target salary (minimum $50,000)');
+                return;
+            }
+
+            // Calculate pricing (0.1% of annual salary per week)
+            const weeklyPrice = Math.round((salary * 0.001) * 100) / 100;
+            const dailyPrice = Math.round((weeklyPrice / 7) * 100) / 100;
+            const monthlyPrice = Math.round((weeklyPrice * 4.33) * 100) / 100;
+            const roiDays = Math.round((weeklyPrice * 52) / (salary / 365));
+
+            // Update the display
+            document.getElementById('modal-weekly-price').textContent = `$${weeklyPrice.toLocaleString()}`;
+            document.getElementById('modal-daily-price').textContent = `$${dailyPrice.toLocaleString()}`;
+            document.getElementById('modal-monthly-price').textContent = `$${monthlyPrice.toLocaleString()}`;
+            document.getElementById('modal-roi-days').textContent = roiDays;
+
+            // Show the result
+            document.getElementById('modal-result').style.display = 'block';
+        }
+
+        function setupScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in-up');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.value-card, .stat-card, .testimonial-card, .cert-card').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Modal keyboard handling
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePricingModal();
+            }
+            if (e.key === 'Enter' && document.getElementById('pricing-modal').classList.contains('active')) {
+                calculateModalPrice();
+            }
+        });
+
+        // Modal backdrop click
+        document.getElementById('pricing-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePricingModal();
+            }
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

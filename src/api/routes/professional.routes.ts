@@ -13,6 +13,11 @@ router.get('/rev1', (req, res) => {
     res.sendFile(path.join(__dirname, '../../../public/rev1.html'));
 });
 
+// Rev2 interface - Democratized job search tools (rev1 base with FOMO messaging)
+router.get('/rev2', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../../public/rev2.html'));
+});
+
 // API endpoints for professional interface
 router.get('/api/professional/stats', (req, res) => {
     res.json({
