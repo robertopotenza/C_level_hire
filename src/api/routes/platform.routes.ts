@@ -5,6 +5,34 @@ type CommitmentKey = keyof typeof PlatformConfig.pricing.commitments;
 
 const router = Router();
 
+// Demo pricing examples (GET endpoint for easy testing)
+router.get('/pricing/demo', (req: Request, res: Response) => {
+  const examples = [
+    { title: 'VP Level', targetSalary: 300000 },
+    { title: 'C-Suite', targetSalary: 500000 },
+    { title: 'Senior Director', targetSalary: 250000 }
+  ].map(example => {
+    const baseRate = example.targetSalary * PlatformConfig.pricing.base.weeklyPercentage;
+    const weeklyRate = Math.max(baseRate, PlatformConfig.pricing.base.minimumWeekly);
+    return {
+      ...example,
+      weeklyRate: Math.round(weeklyRate),
+      monthlyRate: Math.round(weeklyRate * 4.33),
+      message: `${example.title}: Only $${Math.round(weeklyRate)}/week for $${example.targetSalary.toLocaleString()} role`
+    };
+  });
+
+  res.json({
+    platform: PlatformConfig.platform,
+    pricing: {
+      model: '0.1% of target salary per week',
+      minimum: `$${PlatformConfig.pricing.base.minimumWeekly}/week`,
+      maximum: `$${PlatformConfig.pricing.base.maximumWeekly}/week`,
+      examples
+    }
+  });
+});
+
 // Calculate pricing based on target salary
 router.post('/pricing/calculate', (req: Request, res: Response) => {
   const { targetSalary, commitment = 'weekly' } = req.body as {

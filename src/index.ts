@@ -3,6 +3,7 @@ import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import * as dotenv from 'dotenv';
+import path from 'path';
 
 // Load environment variables
 dotenv.config();
@@ -30,6 +31,9 @@ const io = new Server(httpServer, {
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from public directory
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Health check endpoint for Railway
 app.get('/health', async (req, res) => {
@@ -62,14 +66,24 @@ app.use('/api/auth', authRoutes);
 app.use('/api/platform', platformRoutes);
 app.use('/api/agent', agentRoutes);
 
-// Root endpoint
+// Root endpoint - serve the main HTML interface
 app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+});
+
+// API info endpoint (for programmatic access)
+app.get('/api', (req, res) => {
   res.json({
     name: 'C-Level Hire AI Agent',
     version: '2.0.0',
     message: 'Democratizing executive job search tools',
     pricing: '0.1% of target salary per week',
-    documentation: '/api/docs'
+    endpoints: {
+      health: '/health',
+      auth: '/api/auth/*',
+      platform: '/api/platform/*',
+      agent: '/api/agent/*'
+    }
   });
 });
 
