@@ -8,6 +8,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "start:prod": "npx prisma migrate deploy && npm start",
+    "startup": "node startup.js",
     "migrate": "ts-node src/database/migrate.ts",
     "test": "jest",
     "deploy": "railway up"

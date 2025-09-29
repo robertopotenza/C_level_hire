@@ -32,13 +32,29 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Health check endpoint for Railway
-app.get('/health', (req, res) => {
-  res.json({
+app.get('/health', async (req, res) => {
+  const health = {
     status: 'healthy',
     version: '2.0.0',
     timestamp: new Date().toISOString(),
-    pricing: '0.1% of target salary per week'
-  });
+    pricing: '0.1% of target salary per week',
+    database: 'unknown',
+    environment: process.env.NODE_ENV || 'development'
+  };
+
+  // Check database connection if DATABASE_URL is available
+  if (process.env.DATABASE_URL) {
+    try {
+      const dbHealthy = await DatabaseService.healthCheck();
+      health.database = dbHealthy ? 'connected' : 'disconnected';
+    } catch (error) {
+      health.database = 'error';
+    }
+  } else {
+    health.database = 'not_configured';
+  }
+
+  res.json(health);
 });
 
 // API Routes
@@ -120,6 +136,19 @@ async function startServer() {
     console.log(`💰 Pricing: 0.1% of target salary per week`);
     console.log(`🌐 URL: ${process.env.PLATFORM_URL}`);
     console.log('================================================');
+
+    // Check for required environment variables
+    if (!process.env.DATABASE_URL) {
+      console.warn('⚠️  DATABASE_URL not found, some features may be limited');
+      console.log('🌍 Starting server in limited mode...');
+      
+      // Start the HTTP server without database
+      httpServer.listen(PORT, () => {
+        console.log('✅ Server running in limited mode (no database)');
+        console.log(`🌍 Server running at: http://localhost:${PORT}`);
+      });
+      return;
+    }
 
     // Initialize database first
     await DatabaseService.initialize();

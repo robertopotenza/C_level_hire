@@ -4,6 +4,11 @@ export class DatabaseService {
   private static prisma: PrismaClient;
 
   static async initialize(): Promise<void> {
+    if (!process.env.DATABASE_URL) {
+      console.warn('DATABASE_URL not found, skipping database initialization');
+      return;
+    }
+
     console.log('Initializing database connection...');
     this.prisma = new PrismaClient({
       log: process.env.NODE_ENV === 'development' ? ['query', 'info', 'warn', 'error'] : ['error']
@@ -20,12 +25,18 @@ export class DatabaseService {
 
   static getPrismaClient(): PrismaClient {
     if (!this.prisma) {
+      if (!process.env.DATABASE_URL) {
+        throw new Error('Database not available. DATABASE_URL not configured.');
+      }
       throw new Error('Database not initialized. Call initialize() first.');
     }
     return this.prisma;
   }
 
   static async healthCheck(): Promise<boolean> {
+    if (!this.prisma) {
+      return false;
+    }
     try {
       await this.prisma.$queryRaw`SELECT 1`;
       return true;
