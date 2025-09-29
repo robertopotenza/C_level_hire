@@ -71,25 +71,79 @@ io.on('connection', (socket) => {
   });
 });
 
+// Error handling
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  process.exit(1);
+});
+
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+  process.exit(1);
+});
+
+// Graceful shutdown
+const gracefulShutdown = async () => {
+  console.log('Starting graceful shutdown...');
+  
+  httpServer.close(async () => {
+    console.log('HTTP server closed');
+    
+    try {
+      await DatabaseService.disconnect();
+      console.log('Database disconnected');
+      process.exit(0);
+    } catch (error) {
+      console.error('Error during shutdown:', error);
+      process.exit(1);
+    }
+  });
+
+  // Force exit after 10 seconds
+  setTimeout(() => {
+    console.error('Could not close connections in time, forcefully shutting down');
+    process.exit(1);
+  }, 10000);
+};
+
+process.on('SIGTERM', gracefulShutdown);
+process.on('SIGINT', gracefulShutdown);
+
 // Start server
 const PORT = process.env.PORT || 3000;
-httpServer.listen(PORT, async () => {
-  console.log('================================================');
-  console.log('🚀 C-Level Hire AI Agent Platform');
-  console.log(`📍 Running on port: ${PORT}`);
-  console.log(`💰 Pricing: 0.1% of target salary per week`);
-  console.log(`🌐 URL: ${process.env.PLATFORM_URL}`);
-  console.log('================================================');
 
-  // Initialize database
-  await DatabaseService.initialize();
+async function startServer() {
+  try {
+    console.log('================================================');
+    console.log('🚀 C-Level Hire AI Agent Platform');
+    console.log(`📍 Starting on port: ${PORT}`);
+    console.log(`💰 Pricing: 0.1% of target salary per week`);
+    console.log(`🌐 URL: ${process.env.PLATFORM_URL}`);
+    console.log('================================================');
 
-  // Start AI agent orchestrator
-  const orchestrator = new AgentOrchestrator();
-  await orchestrator.startAllAgents();
+    // Initialize database first
+    await DatabaseService.initialize();
+    console.log('✅ Database initialized');
 
-  console.log('✅ All systems operational');
-});
+    // Start AI agent orchestrator
+    const orchestrator = new AgentOrchestrator();
+    await orchestrator.startAllAgents();
+    console.log('✅ AI Agent orchestrator started');
+
+    // Start the HTTP server
+    httpServer.listen(PORT, () => {
+      console.log('✅ All systems operational');
+      console.log(`🌍 Server running at: http://localhost:${PORT}`);
+    });
+    
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
+}
+
+// Start the application
+startServer();
 
 // Export for testing
 export { app, io };

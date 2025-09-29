@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import bcrypt from 'bcrypt';
 import jwt, { SignOptions, Secret } from 'jsonwebtoken';
+import { DatabaseService } from '../../services/Database.service';
 
 const router = Router();
 
@@ -19,17 +20,29 @@ router.post('/signup', async (req: Request, res: Response) => {
   }
 
   try {
-    const passwordHash = await bcrypt.hash(password, 10);
+    const prisma = DatabaseService.getPrismaClient();
+    
+    // Check if user already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { email }
+    });
 
+    if (existingUser) {
+      return res.status(409).json({ error: 'User already exists' });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
     const weeklyRate = targetSalary * 0.001;
 
-    const user = {
-      id: `user_${Date.now()}`,
-      email,
-      passwordHash,
-      targetSalary,
-      weeklyRate
-    };
+    // Create user in database
+    const user = await prisma.user.create({
+      data: {
+        email,
+        passwordHash,
+        targetSalary,
+        weeklyRate
+      }
+    });
 
     const jwtSecret: Secret = process.env.JWT_SECRET || 'secret';
     const signOptions: SignOptions = {
@@ -53,6 +66,7 @@ router.post('/signup', async (req: Request, res: Response) => {
       }
     });
   } catch (error) {
+    console.error('Signup error:', error);
     res.status(500).json({ error: 'Signup failed' });
   }
 });
@@ -66,13 +80,30 @@ router.post('/login', async (req: Request, res: Response) => {
   }
 
   try {
+    const prisma = DatabaseService.getPrismaClient();
+    
+    // Find user by email
+    const user = await prisma.user.findUnique({
+      where: { email }
+    });
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    // Verify password
+    const isValidPassword = await bcrypt.compare(password, user.passwordHash);
+    if (!isValidPassword) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
     const jwtSecret: Secret = process.env.JWT_SECRET || 'secret';
     const signOptions: SignOptions = {
       expiresIn: process.env.JWT_EXPIRES_IN ? parseInt(process.env.JWT_EXPIRES_IN) : 7 * 24 * 60 * 60 // 7 days in seconds
     };
 
     const token = jwt.sign(
-      { userId: 'user_123', email },
+      { userId: user.id, email: user.email },
       jwtSecret,
       signOptions
     );
@@ -80,9 +111,15 @@ router.post('/login', async (req: Request, res: Response) => {
     res.json({
       success: true,
       token,
+      user: {
+        id: user.id,
+        email: user.email,
+        weeklyRate: user.weeklyRate
+      },
       message: 'Welcome back!'
     });
   } catch (error) {
+    console.error('Login error:', error);
     res.status(401).json({ error: 'Invalid credentials' });
   }
 });

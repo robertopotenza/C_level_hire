@@ -1,4 +1,5 @@
 import { PlatformConfig } from '../../config/platform.config';
+import { DatabaseService } from '../../services/Database.service';
 
 interface AgentUser {
   id: string;
@@ -30,7 +31,23 @@ export class AgentOrchestrator {
   }
 
   private async getActiveUsers(): Promise<AgentUser[]> {
-    return [];
+    try {
+      const prisma = DatabaseService.getPrismaClient();
+      const users = await prisma.user.findMany({
+        select: {
+          id: true,
+          targetSalary: true
+        }
+      });
+      
+      return users.map(user => ({
+        id: user.id,
+        targetSalary: user.targetSalary
+      }));
+    } catch (error) {
+      console.error('Error fetching active users:', error);
+      return [];
+    }
   }
 }
 
