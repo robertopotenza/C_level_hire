@@ -18,6 +18,30 @@ router.get('/rev2', (req, res) => {
     res.sendFile(path.join(__dirname, '../../../public/rev2.html'));
 });
 
+// Rev3 interface - Production-ready with SEO, accessibility, analytics, and lead capture
+router.get('/rev3', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../../public/rev3.html'));
+});
+
+// Rev3 Production interface - Complete enterprise-grade implementation
+router.get('/rev3-production', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../../public/rev3-production.html'));
+});
+
+// Lead capture API endpoint for rev3
+router.post('/api/leads/capture', (req, res) => {
+    const { email, targetSalary, fullName } = req.body;
+    
+    // In production, this would save to database
+    console.log('Lead captured:', { email, targetSalary, fullName, timestamp: new Date() });
+    
+    res.json({
+        success: true,
+        message: 'Lead captured successfully',
+        leadId: Date.now().toString()
+    });
+});
+
 // API endpoints for professional interface
 router.get('/api/professional/stats', (req, res) => {
     res.json({

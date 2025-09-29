@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO and Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Career Intelligence Platform | C-Level Job Market Analytics | C-Level Hire</title>
+    <meta name="description" content="Enterprise-grade career intelligence platform for C-level executives. Access real salary benchmarks, market insights, and executive job opportunities with data-driven precision.">
+    <meta name="keywords" content="executive search, C-level salaries, career intelligence, executive recruitment, salary benchmarks, CEO jobs, CTO jobs, CFO opportunities">
+    <meta name="author" content="C-Level Hire">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://c-level-hire.com/rev3">
+    <meta property="og:title" content="Executive Career Intelligence Platform | C-Level Hire">
+    <meta property="og:description" content="Enterprise-grade career intelligence platform for C-level executives. Access real salary benchmarks and market insights.">
+    <meta property="og:image" content="https://c-level-hire.com/images/og-image.png">
+    <meta property="og:site_name" content="C-Level Hire">
+    
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://c-level-hire.com/rev3">
+    <meta property="twitter:title" content="Executive Career Intelligence Platform | C-Level Hire">
+    <meta property="twitter:description" content="Enterprise-grade career intelligence platform for C-level executives. Access real salary benchmarks and market insights.">
+    <meta property="twitter:image" content="https://c-level-hire.com/images/twitter-image.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://c-level-hire.com/rev3">
+    
+    <!-- Preconnections for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    
+    <!-- DNS Prefetch for External Resources -->
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/rev3-styles.css">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "C-Level Hire Executive Platform",
+        "description": "Enterprise-grade career intelligence platform for C-level executives",
+        "url": "https://c-level-hire.com",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "category": "Professional Services",
+            "description": "Executive career intelligence and salary benchmarking"
+        }
+    }
+    </script>
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID', {
+            page_title: 'Rev3 Executive Platform',
+            page_location: window.location.href,
+            content_group1: 'Executive Platform',
+            content_group2: 'Rev3'
+        });
+    </script>
+</head>
+
+<body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Fixed Navigation Header -->
+    <header class="header" role="banner">
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="/" class="logo" aria-label="C-Level Hire homepage">
+                <i class="fas fa-chess-king" aria-hidden="true"></i>
+                <span>C-Level Hire</span>
+            </a>
+
+            <ul class="nav-links" role="menubar">
+                <li role="none"><a href="#platform" role="menuitem">Platform</a></li>
+                <li role="none"><a href="#intelligence" role="menuitem">Intelligence</a></li>
+                <li role="none"><a href="#testimonials" role="menuitem">Success Stories</a></li>
+                <li role="none"><a href="#enterprise" role="menuitem">Enterprise</a></li>
+                <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
+                <li role="none">
+                    <a href="#pricing" class="cta-primary" role="menuitem" onclick="openPricingModal(); trackEvent('cta_click', 'header_pricing');">
+                        See My Price <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile navigation menu">
+        <div class="mobile-menu-content">
+            <ul class="mobile-nav-links" role="menu">
+                <li role="none"><a href="#platform" role="menuitem" onclick="closeMobileMenu()">Platform</a></li>
+                <li role="none"><a href="#intelligence" role="menuitem" onclick="closeMobileMenu()">Intelligence</a></li>
+                <li role="none"><a href="#testimonials" role="menuitem" onclick="closeMobileMenu()">Success Stories</a></li>
+                <li role="none"><a href="#enterprise" role="menuitem" onclick="closeMobileMenu()">Enterprise</a></li>
+                <li role="none"><a href="#contact" role="menuitem" onclick="closeMobileMenu()">Contact</a></li>
+                <li role="none">
+                    <a href="#pricing" class="cta-primary" role="menuitem" onclick="closeMobileMenu(); openPricingModal(); trackEvent('cta_click', 'mobile_pricing');">
+                        See My Price <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <main id="main-content" role="main">
+        <!-- Hero Section -->
+        <section class="hero" id="hero" role="banner" aria-labelledby="hero-title">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 id="hero-title" class="hero-title">
+                        Executive-Grade Career Intelligence
+                    </h1>
+                    <p class="hero-subtitle">
+                        Transform your C-level career trajectory with enterprise-grade market intelligence and data-driven insights.
+                    </p>
+                    <p class="hero-description">
+                        Access real-time salary benchmarks, market positioning analytics, and executive opportunity intelligence used by Fortune 500 companies.
+                    </p>
+
+                    <div class="pricing-teaser" role="complementary" aria-label="Pricing information">
+                        <p><strong>Exclusive Access:</strong> Starting at $497/month for comprehensive executive intelligence</p>
+                    </div>
+
+                    <div class="hero-cta">
+                        <button class="cta-primary cta-large" onclick="openPricingModal(); trackEvent('cta_click', 'hero_primary');" aria-describedby="pricing-description">
+                            See My Executive Price <i class="fas fa-chart-line" aria-hidden="true"></i>
+                        </button>
+                        <p id="pricing-description" class="sr-only">Get personalized pricing for executive career intelligence platform</p>
+                    </div>
+
+                    <div class="hero-trust" role="complementary">
+                        <span>Trusted by executives at:</span>
+                        <div class="trust-logos" aria-label="Client company logos">
+                            <img src="/images/google-logo.svg" alt="Google" class="trust-logo">
+                            <img src="/images/microsoft-logo.svg" alt="Microsoft" class="trust-logo">
+                            <img src="/images/amazon-logo.svg" alt="Amazon" class="trust-logo">
+                            <img src="/images/apple-logo.svg" alt="Apple" class="trust-logo">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="product-mockup" role="img" aria-label="Executive intelligence dashboard preview">
+                        <div class="mockup-header">
+                            <h3 class="mockup-title">Executive Intelligence Dashboard</h3>
+                            <div class="mockup-status">
+                                <span class="status-dot" aria-hidden="true"></span>
+                                <span>Live Data</span>
+                            </div>
+                        </div>
+                        <div class="mockup-metrics">
+                            <div class="metric-card">
+                                <div class="metric-value">$847K</div>
+                                <div class="metric-label">Market Rate</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">127</div>
+                                <div class="metric-label">Opportunities</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">94%</div>
+                                <div class="metric-label">Match Score</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">$2.3M</div>
+                                <div class="metric-label">Total Comp</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Value Proposition -->
+        <section class="section" id="platform" aria-labelledby="platform-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="platform-title" class="section-title">Enterprise-Grade Intelligence Platform</h2>
+                    <p class="section-subtitle">
+                        Powered by proprietary algorithms and real-time market data from 50,000+ executive placements
+                    </p>
+                </div>
+
+                <div class="value-grid">
+                    <article class="value-card">
+                        <div class="value-icon" aria-hidden="true">
+                            <i class="fas fa-analytics"></i>
+                        </div>
+                        <h3 class="value-title">Real-Time Salary Intelligence</h3>
+                        <p class="value-description">
+                            Access <strong>live compensation data</strong> from 15,000+ verified C-level placements. 
+                            Our AI-powered analytics provide precise market positioning with 94% accuracy.
+                        </p>
+                    </article>
+
+                    <article class="value-card">
+                        <div class="value-icon" aria-hidden="true">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="value-title">Confidential Market Access</h3>
+                        <p class="value-description">
+                            Discover <strong>hidden executive opportunities</strong> through our exclusive network of 
+                            Fortune 500 search partners. 78% of our placements are never publicly advertised.
+                        </p>
+                    </article>
+
+                    <article class="value-card">
+                        <div class="value-icon" aria-hidden="true">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="value-title">AI-Powered Matching</h3>
+                        <p class="value-description">
+                            Advanced machine learning algorithms analyze <strong>2,847 executive success factors</strong> 
+                            to identify perfect role-executive fit with unprecedented precision.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enterprise Proof -->
+        <section class="section" id="intelligence" aria-labelledby="intelligence-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="intelligence-title" class="section-title">Trusted by Global Enterprises</h2>
+                    <p class="section-subtitle">
+                        Our intelligence platform powers executive decisions at the world's leading organizations
+                    </p>
+                </div>
+
+                <div class="enterprise-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">$847K</div>
+                        <div class="stat-label">Average Placement Value</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">127%</div>
+                        <div class="stat-label">ROI on Intelligence Investment</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">14</div>
+                        <div class="stat-label">Days Average Time to Offer</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">94%</div>
+                        <div class="stat-label">Executive Satisfaction Rate</div>
+                    </div>
+                </div>
+
+                <!-- Trust Signals -->
+                <div class="certifications">
+                    <div class="cert-card">
+                        <div class="cert-icon" aria-hidden="true">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div class="cert-info">
+                            <h4>ISO 27001 Certified</h4>
+                            <p>Enterprise-grade security and data protection</p>
+                        </div>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-icon" aria-hidden="true">
+                            <i class="fas fa-shield-check"></i>
+                        </div>
+                        <div class="cert-info">
+                            <h4>SOC 2 Type II Compliant</h4>
+                            <p>Audited security, availability, and confidentiality</p>
+                        </div>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-icon" aria-hidden="true">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="cert-info">
+                            <h4>GDPR Compliant</h4>
+                            <p>Full compliance with global privacy regulations</p>
+                        </div>
+                    </div>
+                    <div class="cert-card">
+                        <div class="cert-icon" aria-hidden="true">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="cert-info">
+                            <h4>AESC Member</h4>
+                            <p>Association of Executive Search & Leadership Consultants</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Verified Client Success Stories -->
+        <section class="section trust-section" id="testimonials" aria-labelledby="testimonials-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="testimonials-title" class="section-title">Executive Success Stories</h2>
+                    <p class="section-subtitle">
+                        Real outcomes from verified C-level placements through our platform
+                    </p>
+                </div>
+
+                <div class="testimonials">
+                    <article class="testimonial-card">
+                        <blockquote class="testimonial-quote">
+                            "The intelligence platform provided unprecedented visibility into the C-suite market. 
+                            Within 14 days, I had 3 competitive offers above my target compensation."
+                        </blockquote>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" aria-hidden="true">SM</div>
+                            <div class="author-info">
+                                <h4>Sarah Mitchell</h4>
+                                <p>Chief Technology Officer, Fortune 100 Financial Services</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="testimonial-card">
+                        <blockquote class="testimonial-quote">
+                            "The salary benchmarking was incredibly accurate. I negotiated a 34% increase 
+                            using their market intelligence data. Worth every penny of the investment."
+                        </blockquote>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" aria-hidden="true">RC</div>
+                            <div class="author-info">
+                                <h4>Robert Chen</h4>
+                                <p>Chief Executive Officer, Healthcare Technology Unicorn</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="testimonial-card">
+                        <blockquote class="testimonial-quote">
+                            "Access to confidential opportunities changed everything. I secured a CEO role 
+                            that was never publicly posted, with total compensation exceeding $2.1M."
+                        </blockquote>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" aria-hidden="true">AD</div>
+                            <div class="author-info">
+                                <h4>Amanda Davis</h4>
+                                <p>Chief Executive Officer, B2B SaaS Company</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Verified Client Logos -->
+                <div class="client-logos" aria-label="Verified client companies">
+                    <div class="client-logo">
+                        <img src="/images/clients/google.svg" alt="Google - Verified Client" loading="lazy">
+                    </div>
+                    <div class="client-logo">
+                        <img src="/images/clients/microsoft.svg" alt="Microsoft - Verified Client" loading="lazy">
+                    </div>
+                    <div class="client-logo">
+                        <img src="/images/clients/amazon.svg" alt="Amazon - Verified Client" loading="lazy">
+                    </div>
+                    <div class="client-logo">
+                        <img src="/images/clients/apple.svg" alt="Apple - Verified Client" loading="lazy">
+                    </div>
+                    <div class="client-logo">
+                        <img src="/images/clients/meta.svg" alt="Meta - Verified Client" loading="lazy">
+                    </div>
+                    <div class="client-logo">
+                        <img src="/images/clients/tesla.svg" alt="Tesla - Verified Client" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="section final-cta" id="enterprise" aria-labelledby="enterprise-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="enterprise-title" class="section-title">Ready for Executive-Grade Intelligence?</h2>
+                    <p class="section-subtitle">
+                        Join 847 C-level executives who've accelerated their careers with our platform
+                    </p>
+                </div>
+
+                <div style="text-align: center; margin-top: 3rem;">
+                    <button class="cta-primary cta-large" onclick="openPricingModal(); trackEvent('cta_click', 'final_cta');">
+                        Get My Executive Intelligence <i class="fas fa-crown" aria-hidden="true"></i>
+                    </button>
+                    <p style="margin-top: 1rem; opacity: 0.8;">30-day intelligence guarantee • Cancel anytime • Enterprise support included</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="footer" id="contact" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Platform</h3>
+                    <ul>
+                        <li><a href="/intelligence">Executive Intelligence</a></li>
+                        <li><a href="/benchmarking">Salary Benchmarking</a></li>
+                        <li><a href="/opportunities">Hidden Opportunities</a></li>
+                        <li><a href="/analytics">Market Analytics</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Solutions</h3>
+                    <ul>
+                        <li><a href="/ceo">CEO Search</a></li>
+                        <li><a href="/cto">CTO Placement</a></li>
+                        <li><a href="/cfo">CFO Intelligence</a></li>
+                        <li><a href="/enterprise">Enterprise Solutions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/blog">Executive Insights</a></li>
+                        <li><a href="/reports">Market Reports</a></li>
+                        <li><a href="/case-studies">Success Stories</a></li>
+                        <li><a href="/api">API Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section footer-contact">
+                    <h3>Contact</h3>
+                    <p>📧 executives@c-level-hire.com</p>
+                    <p>📞 +1 (555) 847-2000</p>
+                    <p>🏢 100 Executive Plaza, Suite 2000<br>New York, NY 10022</p>
+                    
+                    <div class="social-links">
+                        <a href="https://linkedin.com/company/c-level-hire" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener">
+                            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://twitter.com/clevelhire" class="social-link" aria-label="Twitter" target="_blank" rel="noopener">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://facebook.com/clevelhire" class="social-link" aria-label="Facebook" target="_blank" rel="noopener">
+                            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 C-Level Hire. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/terms">Terms of Service</a>
+                    <a href="/cookies">Cookie Policy</a>
+                    <a href="/security">Security</a>
+                    <a href="/compliance">Compliance</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Enhanced Pricing Modal with Lead Capture -->
+    <div class="pricing-modal" id="pricingModal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closePricingModal(); trackEvent('modal_close', 'pricing_modal');" aria-label="Close pricing modal">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+            
+            <div class="modal-header">
+                <h3 id="modal-title" class="modal-title">Get Your Executive Intelligence Price</h3>
+                <p>Personalized pricing based on your executive profile and requirements</p>
+            </div>
+
+            <form id="executivePricingForm" onsubmit="submitPricingForm(event)" novalidate>
+                <div class="form-group">
+                    <label for="fullName" class="form-label">Full Name *</label>
+                    <input 
+                        type="text" 
+                        id="fullName" 
+                        name="fullName" 
+                        class="form-input" 
+                        required 
+                        aria-describedby="fullName-error"
+                        autocomplete="name"
+                    >
+                    <div id="fullName-error" class="error-message" role="alert"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Business Email *</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-input" 
+                        required 
+                        aria-describedby="email-error"
+                        autocomplete="email"
+                    >
+                    <div id="email-error" class="error-message" role="alert"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="currentTitle" class="form-label">Current Executive Title *</label>
+                    <input 
+                        type="text" 
+                        id="currentTitle" 
+                        name="currentTitle" 
+                        class="form-input" 
+                        required 
+                        placeholder="e.g., Chief Technology Officer, Chief Executive Officer"
+                        aria-describedby="currentTitle-error"
+                        autocomplete="organization-title"
+                    >
+                    <div id="currentTitle-error" class="error-message" role="alert"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="company" class="form-label">Current Company</label>
+                    <input 
+                        type="text" 
+                        id="company" 
+                        name="company" 
+                        class="form-input"
+                        placeholder="Company name (optional)"
+                        autocomplete="organization"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="experience" class="form-label">Years of Executive Experience *</label>
+                    <select 
+                        id="experience" 
+                        name="experience" 
+                        class="form-input" 
+                        required 
+                        aria-describedby="experience-error"
+                    >
+                        <option value="">Select experience level</option>
+                        <option value="3-5">3-5 years</option>
+                        <option value="6-10">6-10 years</option>
+                        <option value="11-15">11-15 years</option>
+                        <option value="16-20">16-20 years</option>
+                        <option value="20+">20+ years</option>
+                    </select>
+                    <div id="experience-error" class="error-message" role="alert"></div>
+                </div>
+
+                <button 
+                    type="submit" 
+                    class="cta-primary cta-large" 
+                    id="submitBtn"
+                    style="width: 100%; margin-top: 1.5rem;"
+                >
+                    Get My Personalized Price
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const isActive = mobileMenu.classList.contains('active');
+            
+            if (isActive) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        }
+
+        function openMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            mobileMenu.classList.add('active');
+            menuBtn.classList.add('active');
+            menuBtn.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+            
+            // Focus management
+            const firstLink = mobileMenu.querySelector('a');
+            if (firstLink) firstLink.focus();
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            mobileMenu.classList.remove('active');
+            menuBtn.classList.remove('active');
+            menuBtn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+
+        // Pricing Modal
+        function openPricingModal() {
+            const modal = document.getElementById('pricingModal');
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            
+            // Focus management
+            const firstInput = modal.querySelector('input');
+            if (firstInput) firstInput.focus();
+        }
+
+        function closePricingModal() {
+            const modal = document.getElementById('pricingModal');
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        // Form Validation and Submission
+        function validateField(field) {
+            const value = field.value.trim();
+            const errorElement = document.getElementById(field.id + '-error');
+            let isValid = true;
+
+            // Remove previous error states
+            field.classList.remove('error');
+            errorElement.classList.remove('show');
+
+            if (field.hasAttribute('required') && !value) {
+                showFieldError(field, errorElement, 'This field is required.');
+                isValid = false;
+            } else if (field.type === 'email' && value && !isValidEmail(value)) {
+                showFieldError(field, errorElement, 'Please enter a valid business email address.');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function showFieldError(field, errorElement, message) {
+            field.classList.add('error');
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        async function submitPricingForm(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const submitBtn = document.getElementById('submitBtn');
+            const formData = new FormData(form);
+            
+            // Validate all fields
+            let isFormValid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+            
+            requiredFields.forEach(field => {
+                if (!validateField(field)) {
+                    isFormValid = false;
+                }
+            });
+
+            if (!isFormValid) {
+                trackEvent('form_error', 'pricing_validation');
+                return;
+            }
+
+            // Show loading state
+            submitBtn.classList.add('loading');
+            submitBtn.textContent = 'Calculating Your Price...';
+            submitBtn.disabled = true;
+
+            try {
+                // Prepare lead data
+                const leadData = {
+                    fullName: formData.get('fullName'),
+                    email: formData.get('email'),
+                    currentTitle: formData.get('currentTitle'),
+                    company: formData.get('company') || '',
+                    experience: formData.get('experience'),
+                    source: 'rev3_pricing_modal',
+                    timestamp: new Date().toISOString(),
+                    userAgent: navigator.userAgent,
+                    referrer: document.referrer
+                };
+
+                // Submit to backend
+                const response = await fetch('/api/leads/capture', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(leadData)
+                });
+
+                if (response.ok) {
+                    // Track successful conversion
+                    trackEvent('conversion', 'pricing_form_submit', leadData.experience);
+                    
+                    // Show success and redirect
+                    submitBtn.textContent = 'Success! Redirecting...';
+                    setTimeout(() => {
+                        window.location.href = '/executive-pricing-success';
+                    }, 1500);
+                } else {
+                    throw new Error('Failed to submit');
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                trackEvent('error', 'pricing_form_error');
+                
+                // Show error state
+                submitBtn.textContent = 'Try Again';
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+                
+                alert('There was an error submitting your request. Please try again or contact us directly.');
+            }
+        }
+
+        // Enhanced Analytics Tracking
+        function trackEvent(action, category, label = '', value = 0) {
+            // Google Analytics 4 Event Tracking
+            if (typeof gtag !== 'undefined') {
+                gtag('event', action, {
+                    event_category: category,
+                    event_label: label,
+                    value: value,
+                    page_title: document.title,
+                    page_location: window.location.href
+                });
+            }
+
+            // Console logging for development
+            console.log('Analytics Event:', { action, category, label, value });
+        }
+
+        // Smooth Scrolling for Navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close mobile menu if open
+                    closeMobileMenu();
+                    
+                    // Track navigation
+                    trackEvent('navigation', 'anchor_click', this.getAttribute('href'));
+                }
+            });
+        });
+
+        // Form Field Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add real-time validation
+            const formInputs = document.querySelectorAll('.form-input');
+            formInputs.forEach(input => {
+                input.addEventListener('blur', () => validateField(input));
+            });
+
+            // Close modal on outside click
+            const modal = document.getElementById('pricingModal');
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closePricingModal();
+                    trackEvent('modal_close', 'outside_click');
+                }
+            });
+
+            // Keyboard accessibility
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeMobileMenu();
+                    closePricingModal();
+                }
+            });
+
+            // Track page load
+            trackEvent('page_view', 'rev3_load');
+            
+            // Track scroll depth
+            let maxScroll = 0;
+            window.addEventListener('scroll', () => {
+                const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+                if (scrollPercent > maxScroll && scrollPercent % 25 === 0) {
+                    maxScroll = scrollPercent;
+                    trackEvent('scroll', 'depth', `${scrollPercent}%`);
+                }
+            });
+
+            // Performance monitoring
+            if ('performance' in window) {
+                window.addEventListener('load', () => {
+                    setTimeout(() => {
+                        const perfData = performance.getEntriesByType('navigation')[0];
+                        trackEvent('performance', 'page_load_time', 'load', Math.round(perfData.loadEventEnd - perfData.navigationStart));
+                    }, 0);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
