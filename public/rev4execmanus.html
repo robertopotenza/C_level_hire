@@ -48,7 +48,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- External CSS -->
-    <link rel="stylesheet" href="/css/rev3-styles.css">
+    <link rel="stylesheet" href="/css/rev4-enhanced.css">
     
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
@@ -135,12 +135,23 @@
     </div>
 
     <main id="main-content" role="main">
+        <!-- Animated Background Elements -->
+        <div class="bg-decoration">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+        </div>
+
         <!-- Hero Section -->
         <section class="hero" id="hero" role="banner" aria-labelledby="hero-title">
             <div class="container">
-                <div class="hero-content">
+                <div class="hero-content animate-fade-in">
+                    <div class="hero-badge">
+                        <i class="fas fa-star"></i>
+                        <span>Trusted by 847+ C-Level Executives</span>
+                    </div>
                     <h1 id="hero-title" class="hero-title">
-                        Executive-Grade Career Intelligence
+                        Executive-Grade Career <span class="gradient-text">Intelligence</span>
                     </h1>
                     <p class="hero-subtitle">
                         Transform your C-level career trajectory with enterprise-grade market intelligence and data-driven insights.
@@ -149,53 +160,60 @@
                         Access real-time salary benchmarks, market positioning analytics, and executive opportunity intelligence used by Fortune 500 companies.
                     </p>
 
-                    <div class="pricing-teaser" role="complementary" aria-label="Pricing information">
-                        <p><strong>Exclusive Access:</strong> Starting at $497/month for comprehensive executive intelligence</p>
-                    </div>
-
                     <div class="hero-cta">
-                        <button class="cta-primary cta-large" onclick="openPricingModal(); trackEvent('cta_click', 'hero_primary');" aria-describedby="pricing-description">
-                            See My Executive Price <i class="fas fa-chart-line" aria-hidden="true"></i>
+                        <button class="cta-primary cta-large cta-glow" onclick="openPricingModal(); trackEvent('cta_click', 'hero_primary');" aria-describedby="pricing-description">
+                            Get Started Free <i class="fas fa-arrow-right" aria-hidden="true"></i>
                         </button>
-                        <p id="pricing-description" class="sr-only">Get personalized pricing for executive career intelligence platform</p>
+                        <button class="cta-secondary cta-large" onclick="document.getElementById('platform').scrollIntoView({behavior: 'smooth'});">
+                            Watch Demo <i class="fas fa-play" aria-hidden="true"></i>
+                        </button>
+                        <p id="pricing-description" class="cta-subtext">No credit card required • 7-day free trial</p>
                     </div>
 
                     <div class="hero-trust" role="complementary">
-                        <span>Trusted by executives at:</span>
-                        <div class="trust-logos" aria-label="Client company logos">
-                            <img src="/images/google-logo.svg" alt="Google" class="trust-logo">
-                            <img src="/images/microsoft-logo.svg" alt="Microsoft" class="trust-logo">
-                            <img src="/images/amazon-logo.svg" alt="Amazon" class="trust-logo">
-                            <img src="/images/apple-logo.svg" alt="Apple" class="trust-logo">
+                        <div class="trust-logos animate-slide-in" aria-label="Client company logos">
+                            <div class="trust-logo-wrapper"><img src="/images/google-logo.svg" alt="Google" class="trust-logo"></div>
+                            <div class="trust-logo-wrapper"><img src="/images/microsoft-logo.svg" alt="Microsoft" class="trust-logo"></div>
+                            <div class="trust-logo-wrapper"><img src="/images/amazon-logo.svg" alt="Amazon" class="trust-logo"></div>
+                            <div class="trust-logo-wrapper"><img src="/images/apple-logo.svg" alt="Apple" class="trust-logo"></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="hero-visual">
+                <div class="hero-visual animate-fade-in-right">
                     <div class="product-mockup" role="img" aria-label="Executive intelligence dashboard preview">
+                        <div class="mockup-glow"></div>
                         <div class="mockup-header">
                             <h3 class="mockup-title">Executive Intelligence Dashboard</h3>
                             <div class="mockup-status">
-                                <span class="status-dot" aria-hidden="true"></span>
+                                <span class="status-dot pulse-animation" aria-hidden="true"></span>
                                 <span>Live Data</span>
                             </div>
                         </div>
                         <div class="mockup-metrics">
-                            <div class="metric-card">
-                                <div class="metric-value">$847K</div>
-                                <div class="metric-label">Market Rate</div>
+                            <div class="metric-card hover-lift">
+                                <div class="metric-icon"><i class="fas fa-dollar-sign"></i></div>
+                                <div class="metric-value counter" data-target="847">0</div>
+                                <div class="metric-label">Market Rate (K)</div>
+                                <div class="metric-trend up"><i class="fas fa-arrow-up"></i> 12% vs. last quarter</div>
                             </div>
-                            <div class="metric-card">
-                                <div class="metric-value">127</div>
+                            <div class="metric-card hover-lift">
+                                <div class="metric-icon"><i class="fas fa-briefcase"></i></div>
+                                <div class="metric-value counter" data-target="127">0</div>
                                 <div class="metric-label">Opportunities</div>
+                                <div class="metric-trend up"><i class="fas fa-arrow-up"></i> 23 new this week</div>
                             </div>
-                            <div class="metric-card">
-                                <div class="metric-value">94%</div>
+                            <div class="metric-card hover-lift">
+                                <div class="metric-icon"><i class="fas fa-chart-line"></i></div>
+                                <div class="metric-value"><span class="counter" data-target="94">0</span>%</div>
                                 <div class="metric-label">Match Score</div>
+                                <div class="metric-trend up"><i class="fas fa-arrow-up"></i> Excellent fit</div>
                             </div>
-                            <div class="metric-card">
-                                <div class="metric-value">$2.3M</div>
+                            <div class="metric-card hover-lift">
+                                <div class="metric-icon"><i class="fas fa-award"></i></div>
+                                <div class="metric-value">$<span class="counter" data-target="2.3">0</span>M</div>
                                 <div class="metric-label">Total Comp</div>
+                                <div class="metric-trend up"><i class="fas fa-arrow-up"></i> Top 5% range</div>
                             </div>
                         </div>
                     </div>
@@ -204,9 +222,10 @@
         </section>
 
         <!-- Value Proposition -->
-        <section class="section" id="platform" aria-labelledby="platform-title">
+        <section class="section gradient-section" id="platform" aria-labelledby="platform-title">
             <div class="container">
-                <div class="section-header">
+                <div class="section-header scroll-reveal">
+                    <span class="section-badge">Platform Features</span>
                     <h2 id="platform-title" class="section-title">Enterprise-Grade Intelligence Platform</h2>
                     <p class="section-subtitle">
                         Powered by proprietary algorithms and real-time market data from 50,000+ executive placements
@@ -214,37 +233,49 @@
                 </div>
 
                 <div class="value-grid">
-                    <article class="value-card">
-                        <div class="value-icon" aria-hidden="true">
+                    <article class="value-card glass-card scroll-reveal" style="--delay: 0.1s">
+                        <div class="value-icon icon-glow" aria-hidden="true">
                             <i class="fas fa-analytics"></i>
+                            <div class="icon-shine"></div>
                         </div>
                         <h3 class="value-title">Real-Time Salary Intelligence</h3>
                         <p class="value-description">
-                            Access <strong>live compensation data</strong> from 15,000+ verified C-level placements. 
+                            Access <strong>live compensation data</strong> from 15,000+ verified C-level placements.
                             Our AI-powered analytics provide precise market positioning with 94% accuracy.
                         </p>
+                        <div class="value-link">
+                            <a href="#intelligence">Explore Intelligence <i class="fas fa-arrow-right"></i></a>
+                        </div>
                     </article>
 
-                    <article class="value-card">
-                        <div class="value-icon" aria-hidden="true">
+                    <article class="value-card glass-card scroll-reveal" style="--delay: 0.2s">
+                        <div class="value-icon icon-glow" aria-hidden="true">
                             <i class="fas fa-shield-alt"></i>
+                            <div class="icon-shine"></div>
                         </div>
                         <h3 class="value-title">Confidential Market Access</h3>
                         <p class="value-description">
-                            Discover <strong>hidden executive opportunities</strong> through our exclusive network of 
+                            Discover <strong>hidden executive opportunities</strong> through our exclusive network of
                             Fortune 500 search partners. 78% of our placements are never publicly advertised.
                         </p>
+                        <div class="value-link">
+                            <a href="#testimonials">See Success Stories <i class="fas fa-arrow-right"></i></a>
+                        </div>
                     </article>
 
-                    <article class="value-card">
-                        <div class="value-icon" aria-hidden="true">
+                    <article class="value-card glass-card scroll-reveal" style="--delay: 0.3s">
+                        <div class="value-icon icon-glow" aria-hidden="true">
                             <i class="fas fa-brain"></i>
+                            <div class="icon-shine"></div>
                         </div>
                         <h3 class="value-title">AI-Powered Matching</h3>
                         <p class="value-description">
-                            Advanced machine learning algorithms analyze <strong>2,847 executive success factors</strong> 
+                            Advanced machine learning algorithms analyze <strong>2,847 executive success factors</strong>
                             to identify perfect role-executive fit with unprecedented precision.
                         </p>
+                        <div class="value-link">
+                            <a href="#enterprise">Learn More <i class="fas fa-arrow-right"></i></a>
+                        </div>
                     </article>
                 </div>
             </div>
@@ -492,21 +523,43 @@
             <button class="close-modal" onclick="closePricingModal(); trackEvent('modal_close', 'pricing_modal');" aria-label="Close pricing modal">
                 <i class="fas fa-times" aria-hidden="true"></i>
             </button>
-            
+
             <div class="modal-header">
-                <h3 id="modal-title" class="modal-title">Get Your Executive Intelligence Price</h3>
-                <p>Personalized pricing based on your executive profile and requirements</p>
+                <div class="modal-badge">
+                    <i class="fas fa-gift"></i>
+                    <span>Limited Time Offer</span>
+                </div>
+                <h3 id="modal-title" class="modal-title">Start Your 7-Day Free Trial</h3>
+                <p>No credit card required • Cancel anytime • Full access</p>
+            </div>
+
+            <div class="modal-benefits">
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Instant access to 15,000+ salary benchmarks</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>127+ exclusive executive opportunities</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>AI-powered career matching & insights</span>
+                </div>
             </div>
 
             <form id="executivePricingForm" onsubmit="submitPricingForm(event)" novalidate>
                 <div class="form-group">
-                    <label for="fullName" class="form-label">Full Name *</label>
-                    <input 
-                        type="text" 
-                        id="fullName" 
-                        name="fullName" 
-                        class="form-input" 
-                        required 
+                    <label for="fullName" class="form-label">
+                        <i class="fas fa-user"></i> Full Name *
+                    </label>
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        class="form-input"
+                        required
+                        placeholder="John Smith"
                         aria-describedby="fullName-error"
                         autocomplete="name"
                     >
@@ -514,13 +567,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="email" class="form-label">Business Email *</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        class="form-input" 
-                        required 
+                    <label for="email" class="form-label">
+                        <i class="fas fa-envelope"></i> Business Email *
+                    </label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-input"
+                        required
+                        placeholder="john@company.com"
                         aria-describedby="email-error"
                         autocomplete="email"
                     >
@@ -528,65 +584,135 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="currentTitle" class="form-label">Current Executive Title *</label>
-                    <input 
-                        type="text" 
-                        id="currentTitle" 
-                        name="currentTitle" 
-                        class="form-input" 
-                        required 
-                        placeholder="e.g., Chief Technology Officer, Chief Executive Officer"
+                    <label for="currentTitle" class="form-label">
+                        <i class="fas fa-briefcase"></i> Current Executive Title *
+                    </label>
+                    <input
+                        type="text"
+                        id="currentTitle"
+                        name="currentTitle"
+                        class="form-input"
+                        required
+                        placeholder="e.g., Chief Technology Officer"
                         aria-describedby="currentTitle-error"
                         autocomplete="organization-title"
                     >
                     <div id="currentTitle-error" class="error-message" role="alert"></div>
                 </div>
 
-                <div class="form-group">
-                    <label for="company" class="form-label">Current Company</label>
-                    <input 
-                        type="text" 
-                        id="company" 
-                        name="company" 
-                        class="form-input"
-                        placeholder="Company name (optional)"
-                        autocomplete="organization"
-                    >
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="company" class="form-label">
+                            <i class="fas fa-building"></i> Company
+                        </label>
+                        <input
+                            type="text"
+                            id="company"
+                            name="company"
+                            class="form-input"
+                            placeholder="Company name"
+                            autocomplete="organization"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="experience" class="form-label">
+                            <i class="fas fa-award"></i> Experience *
+                        </label>
+                        <select
+                            id="experience"
+                            name="experience"
+                            class="form-input"
+                            required
+                            aria-describedby="experience-error"
+                        >
+                            <option value="">Select years</option>
+                            <option value="3-5">3-5 years</option>
+                            <option value="6-10">6-10 years</option>
+                            <option value="11-15">11-15 years</option>
+                            <option value="16-20">16-20 years</option>
+                            <option value="20+">20+ years</option>
+                        </select>
+                        <div id="experience-error" class="error-message" role="alert"></div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="experience" class="form-label">Years of Executive Experience *</label>
-                    <select 
-                        id="experience" 
-                        name="experience" 
-                        class="form-input" 
-                        required 
-                        aria-describedby="experience-error"
-                    >
-                        <option value="">Select experience level</option>
-                        <option value="3-5">3-5 years</option>
-                        <option value="6-10">6-10 years</option>
-                        <option value="11-15">11-15 years</option>
-                        <option value="16-20">16-20 years</option>
-                        <option value="20+">20+ years</option>
-                    </select>
-                    <div id="experience-error" class="error-message" role="alert"></div>
-                </div>
-
-                <button 
-                    type="submit" 
-                    class="cta-primary cta-large" 
+                <button
+                    type="submit"
+                    class="cta-primary cta-large cta-glow"
                     id="submitBtn"
-                    style="width: 100%; margin-top: 1.5rem;"
+                    style="width: 100%; margin-top: 1.5rem; justify-content: center;"
                 >
-                    Get My Personalized Price
+                    <span>Start Free Trial</span>
+                    <i class="fas fa-arrow-right"></i>
                 </button>
+
+                <p class="form-note">
+                    <i class="fas fa-lock"></i> Your information is secure and will never be shared
+                </p>
             </form>
         </div>
     </div>
 
     <!-- JavaScript -->
     <script>
+        // Scroll Reveal Animation
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.scroll-reveal');
+
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        // Counter Animation
+        function animateCounter(element) {
+            const target = parseFloat(element.dataset.target);
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    element.textContent = target % 1 === 0 ? target : target.toFixed(1);
+                    clearInterval(timer);
+                } else {
+                    element.textContent = current % 1 === 0 ? Math.floor(current) : current.toFixed(1);
+                }
+            }, 16);
+        }
+
+        // Initialize counters when visible
+        function initCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                        entry.target.classList.add('counted');
+                        animateCounter(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        // Header scroll effect
+        function handleHeaderScroll() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
+
         // Mobile Menu Toggle
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobileMenu');
@@ -789,6 +915,14 @@
 
         // Form Field Event Listeners
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize scroll animations
+            revealOnScroll();
+            window.addEventListener('scroll', revealOnScroll);
+            window.addEventListener('scroll', handleHeaderScroll);
+
+            // Initialize counters
+            initCounters();
+
             // Add real-time validation
             const formInputs = document.querySelectorAll('.form-input');
             formInputs.forEach(input => {
@@ -812,9 +946,19 @@
                 }
             });
 
+            // Parallax effect for floating shapes
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const shapes = document.querySelectorAll('.floating-shape');
+                shapes.forEach((shape, index) => {
+                    const speed = 0.5 + (index * 0.2);
+                    shape.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+            });
+
             // Track page load
-            trackEvent('page_view', 'rev3_load');
-            
+            trackEvent('page_view', 'rev4_load');
+
             // Track scroll depth
             let maxScroll = 0;
             window.addEventListener('scroll', () => {
@@ -834,6 +978,17 @@
                     }, 0);
                 });
             }
+
+            // Add hover effect to value cards
+            const valueCards = document.querySelectorAll('.value-card');
+            valueCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
         });
     </script>
 </body>
