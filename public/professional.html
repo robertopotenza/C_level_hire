@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C-Level Hire | Executive Talent Intelligence Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #0066cc;
+            --secondary-blue: #004499;
+            --accent-orange: #ff6b35;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --text-light: #888888;
+            --background-light: #f8f9fa;
+            --background-white: #ffffff;
+            --border-light: #e9ecef;
+            --gradient-blue: linear-gradient(135deg, #0066cc 0%, #004499 100%);
+            --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --shadow-strong: 0 8px 32px rgba(0, 0, 0, 0.16);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .wide-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .cta-nav {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-outline {
+            padding: 0.5rem 1.5rem;
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-primary {
+            padding: 0.75rem 1.5rem;
+            background: var(--gradient-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 6rem;
+            background: var(--gradient-blue);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 12px;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 4rem 0;
+            background: var(--background-light);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-subtle);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-4px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Platform Features */
+        .features-section {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-subtle);
+            transition: all 0.4s ease;
+            border: 1px solid var(--border-light);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient-blue);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-icon i {
+            font-size: 1.75rem;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* AI Platform Section */
+        .ai-platform {
+            padding: 6rem 0;
+            background: var(--background-light);
+        }
+
+        .platform-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .platform-text h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .platform-text p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .platform-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .platform-features li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .platform-features i {
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+
+        .platform-visual {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .platform-visual::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-blue);
+            opacity: 0.05;
+            transform: rotate(15deg);
+        }
+
+        .demo-interface {
+            position: relative;
+            z-index: 2;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .demo-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .demo-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .demo-info h4 {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .demo-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .demo-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .demo-metric {
+            text-align: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+        }
+
+        .demo-metric-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .demo-metric-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* Testimonials */
+        .testimonials-section {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid var(--border-light);
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .testimonial-quote {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .author-info h4 {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .author-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            background: var(--gradient-blue);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-content p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-orange);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #cccccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent-orange);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 1rem;
+            text-align: center;
+            color: #888;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+            }
+
+            .platform-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container, .wide-container {
+                padding: 0 1rem;
+            }
+
+            .hero {
+                padding: 6rem 0 4rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="/" class="logo">
+                <i class="fas fa-brain"></i>
+                C-Level Hire
+            </a>
+            <ul class="nav-links">
+                <li><a href="#platform">Platform</a></li>
+                <li><a href="#solutions">Solutions</a></li>
+                <li><a href="#customers">Customers</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#company">Company</a></li>
+            </ul>
+            <div class="cta-nav">
+                <a href="/professional" class="btn-outline">Sign In</a>
+                <a href="#demo" class="btn-primary">Book Demo</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content container">
+            <h1 class="hero-title">The future works here.</h1>
+            <p class="hero-subtitle">
+                We're changing how the world works by pairing the potential of C-level executives with AI-powered talent intelligence.
+            </p>
+            <div class="hero-cta">
+                <a href="#demo" class="btn-primary btn-large">Book a Demo</a>
+                <a href="#overview" class="btn-secondary btn-large">Platform Overview</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid" id="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="stat-executives">0</div>
+                    <div class="stat-label">Executives Placed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="stat-salary">0%</div>
+                    <div class="stat-label">Avg Salary Increase</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="stat-time">0</div>
+                    <div class="stat-label">Days to Hire</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="stat-satisfaction">0%</div>
+                    <div class="stat-label">Client Satisfaction</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="stat-companies">0</div>
+                    <div class="stat-label">Companies Served</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="stat-active">0</div>
+                    <div class="stat-label">Active C-Suite Roles</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Features -->
+    <section class="features-section" id="platform">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">AI that interviews, evaluates, and connects for you</h2>
+                <p class="section-subtitle">
+                    Agentic AI evaluates executives and matches top talent so you can focus on strategic decisions and accelerated career growth.
+                </p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="feature-title">AI-Powered Matching</h3>
+                    <p class="feature-description">
+                        Our advanced AI analyzes 500+ data points to match executives with roles that align with their experience, aspirations, and cultural fit preferences.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3 class="feature-title">Executive Network Access</h3>
+                    <p class="feature-description">
+                        Connect directly with hiring decision makers, board members, and executive search firms through our verified network of C-suite professionals.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Market Intelligence</h3>
+                    <p class="feature-description">
+                        Access real-time salary data, industry trends, and competitive analysis to negotiate from a position of strength and market knowledge.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 class="feature-title">Negotiation Support</h3>
+                    <p class="feature-description">
+                        Expert guidance on salary, equity, and benefits negotiation backed by data-driven insights and successful executive placement experience.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Confidential Search</h3>
+                    <p class="feature-description">
+                        Discreet executive search process that protects your current position while exploring opportunities for career advancement.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="feature-title">Fast-Track Placement</h3>
+                    <p class="feature-description">
+                        Accelerated placement process with dedicated support to secure your next C-level role in 18 days average time to offer.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Platform Deep Dive -->
+    <section class="ai-platform">
+        <div class="container">
+            <div class="platform-content">
+                <div class="platform-text">
+                    <h2>One system of intelligence, fed by executive career data</h2>
+                    <p>
+                        Our Talent Intelligence Platform is built with native AI at the core to deliver 
+                        the personalized experiences you need to accelerate your executive career — and 
+                        transform your professional trajectory.
+                    </p>
+                    <ul class="platform-features">
+                        <li><i class="fas fa-check"></i> Real-time job market analysis across 500+ companies</li>
+                        <li><i class="fas fa-check"></i> Predictive career pathing and opportunity scoring</li>
+                        <li><i class="fas fa-check"></i> Automated application optimization and submission</li>
+                        <li><i class="fas fa-check"></i> Executive compensation benchmarking</li>
+                        <li><i class="fas fa-check"></i> Cultural fit assessment and company matching</li>
+                    </ul>
+                    <a href="#demo" class="btn-primary">Experience the Platform</a>
+                </div>
+                <div class="platform-visual">
+                    <div class="demo-interface">
+                        <div class="demo-header">
+                            <div class="demo-avatar">AI</div>
+                            <div class="demo-info">
+                                <h4>Executive Career Agent</h4>
+                                <p>Analyzing market opportunities...</p>
+                            </div>
+                        </div>
+                        <div class="demo-metrics">
+                            <div class="demo-metric">
+                                <div class="demo-metric-value" id="live-matches">47</div>
+                                <div class="demo-metric-label">Active Matches</div>
+                            </div>
+                            <div class="demo-metric">
+                                <div class="demo-metric-value">$750K</div>
+                                <div class="demo-metric-label">Avg Opportunity</div>
+                            </div>
+                            <div class="demo-metric">
+                                <div class="demo-metric-value">98%</div>
+                                <div class="demo-metric-label">Fit Score</div>
+                            </div>
+                            <div class="demo-metric">
+                                <div class="demo-metric-value">12 days</div>
+                                <div class="demo-metric-label">Time to Interview</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Success Stories -->
+    <section class="testimonials-section" id="customers">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Lead with AI-native intelligence, win with executive talent</h2>
+                <p class="section-subtitle">
+                    See how C-level executives are transforming their careers with our platform
+                </p>
+            </div>
+            <div class="testimonials-grid" id="testimonials-grid">
+                <!-- Testimonials will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section" id="demo">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Putting the power of agentic AI at your fingertips</h2>
+                <p>Ready to accelerate your executive career to its highest potential?</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn-primary btn-large" onclick="bookDemo()">Book a Demo</a>
+                    <a href="#" class="btn-secondary btn-large" onclick="getInTouch()">Get in Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Platform</h3>
+                    <ul>
+                        <li><a href="#">Executive Search</a></li>
+                        <li><a href="#">Career Intelligence</a></li>
+                        <li><a href="#">Market Analytics</a></li>
+                        <li><a href="#">Negotiation Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Solutions</h3>
+                    <ul>
+                        <li><a href="#">CEO Placement</a></li>
+                        <li><a href="#">CTO Search</a></li>
+                        <li><a href="#">CFO Opportunities</a></li>
+                        <li><a href="#">CMO Roles</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Executive Salary Guide</a></li>
+                        <li><a href="#">Career Resources</a></li>
+                        <li><a href="#">Industry Reports</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 C-Level Hire. All rights reserved. Transforming executive careers with AI-powered intelligence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Professional interface functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeProfessionalInterface();
+            loadStats();
+            loadTestimonials();
+            setupScrollAnimations();
+        });
+
+        function initializeProfessionalInterface() {
+            // Check system health
+            fetch('/health')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('System Status:', data);
+                })
+                .catch(error => {
+                    console.log('System initializing...');
+                });
+
+            // Initialize dynamic content
+            updateLiveMetrics();
+            setInterval(updateLiveMetrics, 30000); // Update every 30 seconds
+        }
+
+        function loadStats() {
+            fetch('/api/professional/stats')
+                .then(response => response.json())
+                .then(data => {
+                    animateStats(data);
+                })
+                .catch(error => {
+                    console.log('Loading stats...');
+                    // Fallback data
+                    animateStats({
+                        executivesPlaced: 1247,
+                        averageSalaryIncrease: '127%',
+                        timeToHire: '18 days',
+                        clientSatisfaction: '98.4%',
+                        companiesServed: 89,
+                        rolesActive: 47
+                    });
+                });
+        }
+
+        function animateStats(data) {
+            // Animate executives placed
+            animateNumber(document.getElementById('stat-executives'), 0, data.executivesPlaced, 2000);
+            
+            // Animate salary increase
+            setTimeout(() => {
+                document.getElementById('stat-salary').textContent = data.averageSalaryIncrease;
+            }, 500);
+
+            // Animate time to hire
+            setTimeout(() => {
+                const timeMatch = data.timeToHire.match(/\d+/);
+                if (timeMatch) {
+                    animateNumber(document.getElementById('stat-time'), 0, parseInt(timeMatch[0]), 1500, ' days');
+                }
+            }, 1000);
+
+            // Animate client satisfaction
+            setTimeout(() => {
+                document.getElementById('stat-satisfaction').textContent = data.clientSatisfaction;
+            }, 1500);
+
+            // Animate companies served
+            setTimeout(() => {
+                animateNumber(document.getElementById('stat-companies'), 0, data.companiesServed, 1800);
+            }, 2000);
+
+            // Animate active roles
+            setTimeout(() => {
+                animateNumber(document.getElementById('stat-active'), 0, data.rolesActive, 1200);
+            }, 2500);
+        }
+
+        function animateNumber(element, start, end, duration, suffix = '') {
+            const startTime = Date.now();
+            const range = end - start;
+
+            function update() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3); // Ease out cubic
+                
+                const current = Math.floor(start + (range * easeProgress));
+                element.textContent = current.toLocaleString() + suffix;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+
+            update();
+        }
+
+        function loadTestimonials() {
+            fetch('/api/professional/testimonials')
+                .then(response => response.json())
+                .then(data => {
+                    displayTestimonials(data.testimonials);
+                })
+                .catch(error => {
+                    console.log('Loading testimonials...');
+                    // Fallback testimonials
+                    displayTestimonials([
+                        {
+                            name: "Sarah Chen",
+                            role: "Chief Technology Officer",
+                            company: "TechCorp Global",
+                            quote: "The AI-powered matching was incredible. Found my dream CTO role in 12 days with a 40% salary increase."
+                        },
+                        {
+                            name: "Michael Rodriguez", 
+                            role: "Chief Financial Officer",
+                            company: "Innovation Labs",
+                            quote: "Their executive network and negotiation support secured me equity worth $2.1M. Exceptional service."
+                        },
+                        {
+                            name: "Jennifer Taylor",
+                            role: "Chief Marketing Officer", 
+                            company: "Growth Dynamics",
+                            quote: "Professional, strategic, results-driven. They understand C-suite recruitment like no one else."
+                        }
+                    ]);
+                });
+        }
+
+        function displayTestimonials(testimonials) {
+            const grid = document.getElementById('testimonials-grid');
+            grid.innerHTML = '';
+
+            testimonials.forEach((testimonial, index) => {
+                const card = document.createElement('div');
+                card.className = 'testimonial-card fade-in-up';
+                card.style.animationDelay = `${index * 0.2}s`;
+                
+                card.innerHTML = `
+                    <p class="testimonial-quote">"${testimonial.quote}"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">${testimonial.name.charAt(0)}</div>
+                        <div class="author-info">
+                            <h4>${testimonial.name}</h4>
+                            <p>${testimonial.role}, ${testimonial.company}</p>
+                        </div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function updateLiveMetrics() {
+            // Update live matches with slight variation
+            const liveMatchesElement = document.getElementById('live-matches');
+            const currentMatches = parseInt(liveMatchesElement.textContent);
+            const variation = Math.floor(Math.random() * 5) - 2; // -2 to +2
+            const newMatches = Math.max(40, currentMatches + variation);
+            
+            if (newMatches !== currentMatches) {
+                liveMatchesElement.style.color = 'var(--accent-orange)';
+                liveMatchesElement.textContent = newMatches;
+                
+                setTimeout(() => {
+                    liveMatchesElement.style.color = 'var(--primary-blue)';
+                }, 1000);
+            }
+        }
+
+        function setupScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in-up');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.feature-card, .testimonial-card, .stat-item').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        function bookDemo() {
+            // In a real application, this would open a demo booking modal
+            alert('Demo booking would open here. For now, experience the hyper-personalized interface at: ' + window.location.origin);
+        }
+
+        function getInTouch() {
+            // In a real application, this would open a contact form
+            alert('Contact form would open here. For now, visit the main interface at: ' + window.location.origin);
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
