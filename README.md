@@ -33,7 +33,8 @@ Explore our different landing page versions in the `/public` directory:
 - **[rev2.html](public/rev2.html)** - Revision 2 with Job Autopilot Hub branding
 - **[rev3.html](public/rev3.html)** - Revision 3 with enhanced features
 - **[rev3-production.html](public/rev3-production.html)** - Production-ready Rev3 interface
-- **[rev4execmanus.html](public/rev4execmanus.html)** - ⭐ **State-of-the-art webpage** with modern animations, glassmorphism effects, scroll-reveal interactions, and enhanced UX (Latest)
+- **[rev4execmanus.html](public/rev4execmanus.html)** - State-of-the-art webpage with modern animations, glassmorphism effects, and enhanced UX
+- **[rev9-democratized.html](public/rev9-democratized.html)** - ⭐ **Democratization positioning** - "Tools for Everyone" messaging, accessibility-focused copy, relatable testimonials, transparent pricing (Latest)
 
 ### 🛠️ Tech Stack
 
