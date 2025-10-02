@@ -28,6 +28,24 @@ router.get('/rev3-production', (req, res) => {
     res.sendFile(path.join(__dirname, '../../../public/rev3-production.html'));
 });
 
+// Dashboard interface - Dynamic profile completion with autoapply integration
+router.get('/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../../public/dashboard.html'));
+});
+
+router.get('/dashboard.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../../public/dashboard.html'));
+});
+
+// Integration test interface
+router.get('/test', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../../public/test-integration.html'));
+});
+
+router.get('/test-integration', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../../public/test-integration.html'));
+});
+
 // Lead capture API endpoint for rev3
 router.post('/api/leads/capture', (req, res) => {
     const { email, targetSalary, fullName } = req.body;

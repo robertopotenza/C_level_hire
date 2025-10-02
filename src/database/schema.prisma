@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -13,12 +13,13 @@ model User {
   passwordHash  String
   firstName     String?
   lastName      String?
-  targetSalary  Int
-  weeklyRate    Float
+  targetSalary  Int?
+  weeklyRate    Float?
 
   profile       Profile?
   subscription  Subscription?
   applications  Application[]
+  autoApplySettings AutoApplySettings?
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -31,10 +32,26 @@ model Profile {
 
   currentRole     String?
   currentSalary   Int?
-  yearsExperience Int
-  location        String
+  yearsExperience Int?
+  location        String?
   linkedinUrl     String?
-  skills          Json
+  skills          String? // Changed from Json to String for SQLite compatibility
+
+  // Autoapply-specific fields
+  phone           String?
+  address         String?
+  workEligibility String?
+  resumeUrl       String?
+  coverLetter     String?
+  preferences     String? // JSON string for job preferences
+  
+  // Profile completion tracking
+  personalInfoComplete    Boolean @default(false)
+  experienceComplete      Boolean @default(false)
+  educationComplete       Boolean @default(false)
+  skillsComplete          Boolean @default(false)
+  
+  completionPercentage    Int @default(0)
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -69,7 +86,70 @@ model Application {
 
   matchScore    Float?
   resumeVersion String?
+  
+  // Autoapply-specific fields
+  atsType       String?
+  applicationMethod String?
+  errorMessage  String?
+  retryCount    Int @default(0)
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+}
+
+model AutoApplySettings {
+  id                    String   @id @default(uuid())
+  userId                String   @unique
+  user                  User     @relation(fields: [userId], references: [id])
+
+  isEnabled             Boolean  @default(false)
+  maxDailyApplications  Int      @default(10)
+  targetRoles          String?   // JSON string array
+  excludedCompanies    String?   // JSON string array
+  minSalary            Int?
+  maxSalary            Int?
+  preferredLocations   String?   // JSON string array
+  remoteOnly           Boolean  @default(false)
+
+  lastScanAt           DateTime?
+  nextScanAt           DateTime?
+  
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model Job {
+  id              String   @id @default(uuid())
+  title           String
+  company         String
+  location        String?
+  salary          String?
+  description     String?
+  requirements    String?
+  url             String   @unique
+  atsType         String?
+  
+  isActive        Boolean  @default(true)
+  lastScannedAt   DateTime @default(now())
+  
+  applications    JobApplication[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model JobApplication {
+  id          String   @id @default(uuid())
+  jobId       String
+  job         Job      @relation(fields: [jobId], references: [id])
+  userId      String
+  
+  status      String   // pending, applied, failed, skipped
+  appliedAt   DateTime?
+  errorMessage String?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@unique([jobId, userId])
 }

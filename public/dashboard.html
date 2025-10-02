@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - C-Level Hire</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .profile-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .profile-completion {
+            margin-bottom: 30px;
+        }
+
+        .completion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .completion-percentage {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-right: 20px;
+        }
+
+        .completion-text {
+            flex: 1;
+        }
+
+        .completion-bar-container {
+            background: #e2e8f0;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .completion-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 6px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .profile-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .profile-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .profile-card.complete {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .profile-card.incomplete {
+            border-color: #f59e0b;
+            background: #fefbf0;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .status-complete {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-incomplete {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .card-description {
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .edit-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+
+        .edit-btn:hover {
+            background: #5a67d8;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6b7280;
+        }
+
+        .error {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #fecaca;
+        }
+
+        .success {
+            background: #f0fdf4;
+            color: #166534;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #bbf7d0;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.success {
+            background: #10b981;
+        }
+
+        .notification.error {
+            background: #ef4444;
+        }
+
+        .notification.info {
+            background: #3b82f6;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .debug-info {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #e2e8f0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <div>
+                <h1>Dashboard</h1>
+                <p id="user-email">Loading...</p>
+            </div>
+            <button onclick="logout()" class="btn-secondary" style="max-width: 120px;">Logout</button>
+        </div>
+
+        <div class="profile-section">
+            <div class="loading" id="loading">
+                Loading your profile information...
+            </div>
+
+            <div id="profile-content" class="hidden">
+                <div class="profile-completion">
+                    <h2>Profile Completion</h2>
+                    <div class="completion-header">
+                        <div class="completion-percentage" id="completion-percentage">0%</div>
+                        <div class="completion-text">
+                            <p id="completion-description">Complete your profile to start applying to jobs automatically</p>
+                            <div class="completion-bar-container">
+                                <div class="completion-bar" id="completion-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-sections" id="profile-sections">
+                    <!-- Profile sections will be populated dynamically -->
+                </div>
+
+                <div class="action-buttons">
+                    <button id="autoapply-btn" class="btn-primary" onclick="startAutoApply()">
+                        🔄 Start Auto-Applying to Jobs
+                    </button>
+                    <button class="btn-secondary" onclick="viewApplications()">
+                        📋 View Applications
+                    </button>
+                </div>
+            </div>
+
+            <div id="error-content" class="hidden">
+                <div class="error" id="error-message"></div>
+                <button onclick="retryLoad()" class="btn-primary">Retry</button>
+            </div>
+        </div>
+
+        <div id="debug-section" class="debug-info hidden">
+            <h3>Debug Information</h3>
+            <pre id="debug-content"></pre>
+            <button onclick="toggleDebug()" class="btn-secondary" style="margin-top: 10px;">Hide Debug</button>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let profileData = null;
+        let debugMode = new URLSearchParams(window.location.search).has('debug');
+
+        // API configuration
+        const API_BASE = window.location.origin + '/api/autoapply';
+
+        // Get auth token
+        function getAuthToken() {
+            return localStorage.getItem('authToken') || 
+                   localStorage.getItem('token') || 
+                   sessionStorage.getItem('authToken') ||
+                   sessionStorage.getItem('token');
+        }
+
+        // API helper
+        async function apiCall(endpoint, options = {}) {
+            const token = getAuthToken();
+            const headers = {
+                'Content-Type': 'application/json',
+                ...(token && { 'Authorization': `Bearer ${token}` }),
+                ...options.headers
+            };
+
+            try {
+                const response = await fetch(API_BASE + endpoint, {
+                    ...options,
+                    headers
+                });
+
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.message || `HTTP ${response.status}`);
+                }
+
+                return data;
+            } catch (error) {
+                console.error('API call failed:', endpoint, error);
+                throw error;
+            }
+        }
+
+        // Load profile data
+        async function loadProfile() {
+            try {
+                showLoading();
+                
+                // Get profile readiness data
+                const readinessData = await apiCall('/debug/readiness');
+                profileData = readinessData.data;
+
+                if (debugMode) {
+                    document.getElementById('debug-section').classList.remove('hidden');
+                    document.getElementById('debug-content').textContent = JSON.stringify(readinessData, null, 2);
+                }
+
+                // Calculate completion
+                const isComplete = profileData?.completeness?.complete || false;
+                const completionPercentage = calculateCompletionPercentage(profileData);
+
+                // Update UI
+                updateCompletionDisplay(completionPercentage, isComplete);
+                updateProfileSections(profileData);
+                updateAutoApplyButton(isComplete, profileData?.completeness?.missing);
+
+                showContent();
+
+            } catch (error) {
+                console.error('Failed to load profile:', error);
+                
+                // Try quick fix for incomplete profiles
+                if (error.message.includes('Profile not found') || error.message.includes('incomplete')) {
+                    await tryQuickFix();
+                } else {
+                    showError('Failed to load profile: ' + error.message);
+                }
+            }
+        }
+
+        // Calculate completion percentage
+        function calculateCompletionPercentage(data) {
+            if (!data || !data.profile) return 0;
+            
+            const profile = data.profile;
+            let completedSections = 0;
+            const totalSections = 4;
+
+            // Check each section
+            if (profile.personal?.full_name && profile.personal?.full_name.trim()) completedSections++;
+            if (profile.preferences?.job_titles && profile.preferences.job_titles.length > 0) completedSections++;
+            if (profile.eligibility?.current_job_title) completedSections++;
+            if (profile.personal?.city || profile.preferences?.onsite_location) completedSections++;
+
+            return Math.round((completedSections / totalSections) * 100);
+        }
+
+        // Update completion display
+        function updateCompletionDisplay(percentage, isComplete) {
+            document.getElementById('completion-percentage').textContent = percentage + '%';
+            document.getElementById('completion-bar').style.width = percentage + '%';
+            
+            const description = isComplete 
+                ? 'Your profile is complete! Ready for AutoApply.' 
+                : `Complete your profile to unlock AutoApply functionality. ${profileData?.completeness?.missing || ''}`;
+            document.getElementById('completion-description').textContent = description;
+        }
+
+        // Update profile sections
+        function updateProfileSections(data) {
+            const sections = [
+                {
+                    title: 'Work Location & Jobs',
+                    description: 'Set your preferred work locations, job types, and job titles',
+                    isComplete: data?.profile?.preferences?.job_titles?.length > 0,
+                    editAction: 'editJobPreferences'
+                },
+                {
+                    title: 'Seniority & Time Zones',
+                    description: 'Select seniority levels and preferred time zones',
+                    isComplete: data?.profile?.preferences?.seniority_levels?.length > 0,
+                    editAction: 'editSeniority'
+                },
+                {
+                    title: 'Resume & Contact',
+                    description: 'Upload your resume and provide contact information',
+                    isComplete: data?.profile?.personal?.full_name?.trim().length > 0,
+                    editAction: 'editContact'
+                },
+                {
+                    title: 'Eligibility Details',
+                    description: 'Set work eligibility, visa requirements, and salary expectations',
+                    isComplete: data?.profile?.eligibility?.current_job_title?.length > 0,
+                    editAction: 'editEligibility'
+                }
+            ];
+
+            const container = document.getElementById('profile-sections');
+            container.innerHTML = sections.map(section => `
+                <div class="profile-card ${section.isComplete ? 'complete' : 'incomplete'}">
+                    <div class="card-header">
+                        <div class="card-title">${section.title}</div>
+                        <div class="status-badge ${section.isComplete ? 'status-complete' : 'status-incomplete'}">
+                            ${section.isComplete ? 'Complete' : 'Incomplete'}
+                        </div>
+                    </div>
+                    <div class="card-description">${section.description}</div>
+                    <button class="edit-btn" onclick="${section.editAction}()">Edit</button>
+                </div>
+            `).join('');
+        }
+
+        // Update AutoApply button
+        function updateAutoApplyButton(isComplete, missingFields) {
+            const btn = document.getElementById('autoapply-btn');
+            
+            if (isComplete) {
+                btn.disabled = false;
+                btn.textContent = '🚀 Start Auto-Applying to Jobs';
+            } else {
+                btn.disabled = true;
+                btn.textContent = `⚠️ Complete Profile First (${missingFields || 'Missing data'})`;
+            }
+        }
+
+        // Try quick fix
+        async function tryQuickFix() {
+            try {
+                showNotification('Attempting to complete your profile automatically...', 'info');
+                
+                const result = await apiCall('/complete-profile', { method: 'POST' });
+                
+                if (result.success && result.data?.profileComplete) {
+                    showNotification('Profile completed successfully!', 'success');
+                    setTimeout(loadProfile, 1000);
+                } else {
+                    showError('Profile completion failed: ' + (result.message || 'Unknown error'));
+                }
+                
+            } catch (error) {
+                showError('Quick fix failed: ' + error.message);
+            }
+        }
+
+        // Start AutoApply
+        async function startAutoApply() {
+            try {
+                if (!profileData?.completeness?.complete) {
+                    showNotification('Please complete your profile first', 'error');
+                    return;
+                }
+
+                showNotification('Starting AutoApply...', 'info');
+                
+                const result = await apiCall('/enable', { method: 'POST' });
+                
+                if (result.success) {
+                    showNotification('AutoApply enabled successfully! We\'ll start applying to matching jobs.', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/applications.html';
+                    }, 2000);
+                } else {
+                    showError(result.message || 'Failed to enable AutoApply');
+                }
+                
+            } catch (error) {
+                showError('Failed to start AutoApply: ' + error.message);
+            }
+        }
+
+        // Edit functions (placeholders)
+        function editJobPreferences() { showNotification('Job preferences editor coming soon', 'info'); }
+        function editSeniority() { showNotification('Seniority editor coming soon', 'info'); }
+        function editContact() { showNotification('Contact editor coming soon', 'info'); }
+        function editEligibility() { showNotification('Eligibility editor coming soon', 'info'); }
+        function viewApplications() { window.location.href = '/applications.html'; }
+        function logout() { 
+            localStorage.clear(); 
+            sessionStorage.clear(); 
+            window.location.href = '/'; 
+        }
+
+        // UI helpers
+        function showLoading() {
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('profile-content').classList.add('hidden');
+            document.getElementById('error-content').classList.add('hidden');
+        }
+
+        function showContent() {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('profile-content').classList.remove('hidden');
+            document.getElementById('error-content').classList.add('hidden');
+        }
+
+        function showError(message) {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('profile-content').classList.add('hidden');
+            document.getElementById('error-content').classList.remove('hidden');
+            document.getElementById('error-message').textContent = message;
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 5000);
+        }
+
+        function retryLoad() {
+            loadProfile();
+        }
+
+        function toggleDebug() {
+            const section = document.getElementById('debug-section');
+            section.classList.toggle('hidden');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set user email if available
+            const userEmail = localStorage.getItem('userEmail') || 'eng.potenza@gmail.com';
+            document.getElementById('user-email').textContent = userEmail;
+            
+            // Load profile
+            loadProfile();
+        });
+
+        // Add debug mode toggle
+        if (debugMode) {
+            const debugToggle = document.createElement('button');
+            debugToggle.textContent = 'Show Debug';
+            debugToggle.className = 'btn-secondary';
+            debugToggle.style.position = 'fixed';
+            debugToggle.style.top = '10px';
+            debugToggle.style.left = '10px';
+            debugToggle.style.zIndex = '1001';
+            debugToggle.onclick = toggleDebug;
+            document.body.appendChild(debugToggle);
+        }
+    </script>
+</body>
+</html>

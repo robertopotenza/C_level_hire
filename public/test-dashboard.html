@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 40px;
+            background: #f8fafc;
+        }
+        .test-container {
+            max-width: 800px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover { background: #0056b3; }
+        #results { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Dashboard Connection Test</h1>
+        
+        <div class="status info">
+            <strong>Testing Dashboard Integration</strong><br>
+            This page will test the connection between the frontend dashboard and backend autoapply API.
+        </div>
+
+        <button onclick="testMainServer()">Test Main Server Status</button>
+        <button onclick="testAutoApplyAPI()">Test AutoApply API</button>
+        <button onclick="testProfileAPI()">Test Profile API</button>
+        <button onclick="loadFullDashboard()">Load Full Dashboard</button>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const results = document.getElementById('results');
+        
+        function addResult(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.innerHTML = message;
+            results.appendChild(div);
+        }
+
+        async function testMainServer() {
+            addResult('Testing main server connection...', 'info');
+            try {
+                const response = await fetch('/');
+                if (response.ok) {
+                    addResult('✅ Main server is responding', 'success');
+                } else {
+                    addResult(`❌ Main server error: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                addResult(`❌ Main server connection failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testAutoApplyAPI() {
+            addResult('Testing AutoApply API connection...', 'info');
+            
+            // Test different possible URLs for the autoapply service
+            const testUrls = [
+                'https://autoapply-production.up.railway.app/api/debug/readiness',
+                'http://localhost:3001/api/debug/readiness',
+                'http://localhost:3000/api/debug/readiness', 
+                '/api/autoapply/debug/readiness'
+            ];
+
+            for (const url of testUrls) {
+                try {
+                    addResult(`Trying: ${url}`, 'info');
+                    const response = await fetch(url);
+                    if (response.ok) {
+                        const data = await response.json();
+                        addResult(`✅ AutoApply API found at ${url}: ${JSON.stringify(data, null, 2)}`, 'success');
+                        return;
+                    } else {
+                        addResult(`❌ ${url} returned: ${response.status}`, 'error');
+                    }
+                } catch (error) {
+                    addResult(`❌ ${url} failed: ${error.message}`, 'error');
+                }
+            }
+        }
+
+        async function testProfileAPI() {
+            addResult('Testing Profile API...', 'info');
+            
+            // Mock authentication for testing
+            const testUrls = [
+                'https://autoapply-production.up.railway.app/api/profile/completion',
+                'http://localhost:3001/api/profile/completion',
+                'http://localhost:3000/api/profile/completion',
+                '/api/profile/completion'
+            ];
+
+            for (const url of testUrls) {
+                try {
+                    const response = await fetch(url, {
+                        headers: {
+                            'Authorization': 'Bearer test-token',
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        addResult(`✅ Profile API responding at ${url}: ${JSON.stringify(data, null, 2)}`, 'success');
+                        return;
+                    } else if (response.status === 401) {
+                        addResult(`✅ Profile API found at ${url} (authentication required)`, 'success');
+                        return;
+                    } else {
+                        addResult(`❌ ${url} returned: ${response.status}`, 'error');
+                    }
+                } catch (error) {
+                    addResult(`❌ ${url} failed: ${error.message}`, 'error');
+                }
+            }
+        }
+
+        function loadFullDashboard() {
+            addResult('Loading full dashboard...', 'info');
+            window.location.href = '/dashboard.html';
+        }
+
+        // Auto-run basic tests on load
+        window.onload = function() {
+            addResult('Dashboard test page loaded successfully', 'success');
+            testMainServer();
+        };
+    </script>
+</body>
+</html>

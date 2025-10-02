@@ -42,7 +42,7 @@ export class AgentOrchestrator {
       
       return users.map(user => ({
         id: user.id,
-        targetSalary: user.targetSalary
+        targetSalary: user.targetSalary || 0
       }));
     } catch (error) {
       console.error('Error fetching active users:', error);

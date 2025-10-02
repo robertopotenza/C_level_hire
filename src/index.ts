@@ -13,6 +13,7 @@ import authRoutes from './api/routes/auth.routes';
 import platformRoutes from './api/routes/platform.routes';
 import agentRoutes from './api/routes/agent.routes';
 import professionalRoutes from './api/routes/professional.routes';
+import autoApplyRoutes from './api/routes/autoapply.routes';
 
 // Import services
 import { AgentOrchestrator } from './agent/core/AgentOrchestrator';
@@ -66,6 +67,7 @@ app.get('/health', async (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/platform', platformRoutes);
 app.use('/api/agent', agentRoutes);
+app.use('/api/autoapply', autoApplyRoutes);
 app.use('/', professionalRoutes);
 
 // Root endpoint - serve the main HTML interface
