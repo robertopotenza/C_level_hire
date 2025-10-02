@@ -29,6 +29,13 @@ const io = new Server(httpServer, {
   }
 });
 
+// Request logging middleware
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  console.log('Headers:', JSON.stringify(req.headers, null, 2));
+  next();
+});
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -63,31 +70,84 @@ app.get('/health', async (req, res) => {
   res.json(health);
 });
 
-// API Routes
+// Simple test endpoint
+app.get('/test', (req, res) => {
+  console.log('Test endpoint hit');
+  res.json({ message: 'Server is responding', timestamp: new Date().toISOString() });
+});
+
+// Ping endpoint
+app.get('/ping', (req, res) => {
+  console.log('Ping endpoint hit');
+  res.send('pong');
+});
+
+// API Routes - mount API routes first to avoid conflicts
 app.use('/api/auth', authRoutes);
 app.use('/api/platform', platformRoutes);
 app.use('/api/agent', agentRoutes);
 app.use('/api/autoapply', autoApplyRoutes);
-app.use('/', professionalRoutes);
-
-// Root endpoint - serve the main HTML interface
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
-});
 
 // API info endpoint (for programmatic access)
 app.get('/api', (req, res) => {
-  res.json({
-    name: 'C-Level Hire AI Agent',
-    version: '2.0.0',
-    message: 'Democratizing executive job search tools',
-    pricing: '0.1% of target salary per week',
-    endpoints: {
-      health: '/health',
-      auth: '/api/auth/*',
-      platform: '/api/platform/*',
-      agent: '/api/agent/*'
-    }
+  try {
+    res.json({
+      name: 'C-Level Hire AI Agent',
+      version: '2.0.0',
+      message: 'Democratizing executive job search tools',
+      pricing: '0.1% of target salary per week',
+      endpoints: {
+        health: '/health',
+        auth: '/api/auth/*',
+        platform: '/api/platform/*',
+        agent: '/api/agent/*',
+        autoapply: '/api/autoapply/*'
+      }
+    });
+  } catch (error) {
+    console.error('API endpoint error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Root endpoint - serve the main HTML interface
+app.get('/', (req, res) => {
+  try {
+    console.log('Serving root page from:', path.join(__dirname, '../public/index.html'));
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+  } catch (error) {
+    console.error('Root endpoint error:', error);
+    res.status(500).send('Error serving page');
+  }
+});
+
+// Professional routes - mount after specific routes to avoid conflicts
+app.use('/', professionalRoutes);
+
+// 404 handler for unmatched routes
+app.use('*', (req, res) => {
+  console.log('404 - Route not found:', req.originalUrl);
+  res.status(404).json({ 
+    error: 'Route not found', 
+    path: req.originalUrl,
+    available_endpoints: ['/health', '/api', '/', '/professional', '/dashboard.html']
+  });
+});
+
+// Global error handler
+app.use((error: any, req: any, res: any, next: any) => {
+  console.error('Global error handler:', error);
+  console.error('Request URL:', req.url);
+  console.error('Request method:', req.method);
+  
+  if (res.headersSent) {
+    return next(error);
+  }
+  
+  res.status(500).json({ 
+    error: 'Internal server error',
+    message: error.message,
+    url: req.url
   });
 });
 
@@ -190,6 +250,16 @@ async function startServer() {
   // Always start the HTTP server for health checks
   try {
     httpServer.listen(Number(PORT), '0.0.0.0', () => {
+      console.log('🎯 HTTP Server successfully started and listening');
+      console.log(`🔗 Server binding: 0.0.0.0:${PORT}`);
+      console.log(`🌐 Public URL: ${process.env.PLATFORM_URL || 'http://localhost:' + PORT}`);
+      console.log('📍 Available endpoints:');
+      console.log('  - GET /health (health check)');
+      console.log('  - GET /test (simple test)');
+      console.log('  - GET /ping (ping test)');
+      console.log('  - GET /api (API info)');
+      console.log('  - GET / (main page)');
+      
       if (orchestratorStarted) {
         console.log('✅ Started 0 agents');
         console.log('✅ AI Agent orchestrator started');
