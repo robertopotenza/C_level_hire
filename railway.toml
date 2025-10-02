@@ -3,11 +3,11 @@ builder = "NIXPACKS"
 buildCommand = "npm install && npm run build"
 
 [deploy]
-startCommand = "npx prisma generate && npm start"
+startCommand = "npm run start:prod"
 healthcheckPath = "/health"
-healthcheckTimeout = 300
+healthcheckTimeout = 120
 restartPolicyType = "ON_FAILURE"
-restartPolicyMaxRetries = 3
+restartPolicyMaxRetries = 5
 
 [[services]]
 name = "web"

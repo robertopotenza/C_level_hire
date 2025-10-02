@@ -7,7 +7,7 @@
     "dev": "nodemon --watch src --exec ts-node src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "start:prod": "npx prisma migrate deploy && npm start",
+    "start:prod": "npx prisma generate || true && node dist/index.js",
     "startup": "node startup.js",
     "migrate": "ts-node src/database/migrate.ts",
     "test": "jest",
