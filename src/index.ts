@@ -147,44 +147,60 @@ process.on('SIGINT', gracefulShutdown);
 const PORT = process.env.PORT || 3000;
 
 async function startServer() {
-  try {
-    console.log('================================================');
-    console.log('🚀 C-Level Hire AI Agent Platform');
-    console.log(`📍 Starting on port: ${PORT}`);
-    console.log(`💰 Pricing: 0.1% of target salary per week`);
-    console.log(`🌐 URL: ${process.env.PLATFORM_URL}`);
-    console.log('================================================');
+  console.log('================================================');
+  console.log('🚀 C-Level Hire AI Agent Platform');
+  console.log(`📍 Starting on port: ${PORT}`);
+  console.log(`💰 Pricing: 0.1% of target salary per week`);
+  console.log(`🌐 URL: ${process.env.PLATFORM_URL}`);
+  console.log('================================================');
 
-    // Check for required environment variables
-    if (!process.env.DATABASE_URL) {
-      console.warn('⚠️  DATABASE_URL not found, some features may be limited');
-      console.log('🌍 Starting server in limited mode...');
-      
-      // Start the HTTP server without database
-      httpServer.listen(Number(PORT), '0.0.0.0', () => {
-        console.log('✅ Server running in limited mode (no database)');
-        console.log(`🌍 Server running on port ${PORT}`);
-      });
-      return;
+  let dbInitialized = false;
+  let orchestratorStarted = false;
+  let orchestrator: AgentOrchestrator | null = null;
+
+  // Try to initialize database
+  if (process.env.DATABASE_URL) {
+    try {
+      await DatabaseService.initialize();
+      console.log('✅ Database initialized');
+      dbInitialized = true;
+    } catch (error: any) {
+      console.error('⚠️  Database initialization failed:', error?.message || error);
+      console.log('🔧 Continuing without database - some features may be limited');
     }
+  } else {
+    console.warn('⚠️  DATABASE_URL not found, some features may be limited');
+  }
 
-    // Initialize database first
-    await DatabaseService.initialize();
-    console.log('✅ Database initialized');
+  // Try to start AI agent orchestrator (only if database is working)
+  if (dbInitialized) {
+    try {
+      orchestrator = new AgentOrchestrator();
+      await orchestrator.startAllAgents();
+      console.log('✅ AI Agent orchestrator started');
+      orchestratorStarted = true;
+    } catch (error: any) {
+      console.error('⚠️  Agent orchestrator failed:', error?.message || error);
+      console.log('🤖 Continuing without AI agents - manual mode only');
+    }
+  } else {
+    console.log('🤖 Skipping AI agent orchestrator (no database)');
+  }
 
-    // Start AI agent orchestrator
-    const orchestrator = new AgentOrchestrator();
-    await orchestrator.startAllAgents();
-    console.log('✅ AI Agent orchestrator started');
-
-    // Start the HTTP server
+  // Always start the HTTP server for health checks
+  try {
     httpServer.listen(Number(PORT), '0.0.0.0', () => {
+      if (orchestratorStarted) {
+        console.log('✅ Started 0 agents');
+        console.log('✅ AI Agent orchestrator started');
+      } else {
+        console.log('⚠️  AI Agent orchestrator not started');
+      }
       console.log('✅ All systems operational');
       console.log(`🌍 Server running on port ${PORT}`);
     });
-    
-  } catch (error) {
-    console.error('Failed to start server:', error);
+  } catch (error: any) {
+    console.error('❌ Failed to start HTTP server:', error?.message || error);
     process.exit(1);
   }
 }
