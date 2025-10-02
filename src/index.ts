@@ -34,6 +34,16 @@ const io = new Server(httpServer, {
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
   console.log('Headers:', JSON.stringify(req.headers, null, 2));
+  console.log('IP:', req.ip);
+  console.log('User-Agent:', req.get('User-Agent'));
+  
+  // Log response status when it's sent
+  const originalSend = res.send;
+  res.send = function(body) {
+    console.log(`Response sent: ${res.statusCode} for ${req.method} ${req.url}`);
+    return originalSend.call(this, body);
+  };
+  
   next();
 });
 

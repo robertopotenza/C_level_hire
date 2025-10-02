@@ -1,0 +1,1 @@
+﻿Last deployment: 10/02/2025 15:11:00 - Force redeploy for 502 fix
