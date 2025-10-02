@@ -29,13 +29,29 @@ async function initializeDatabase() {
         if (error.code === 'P2021' || error.message.includes('does not exist')) {
           console.log('📋 Tables do not exist, creating them...');
           
-          // Use db push to create tables from schema
-          execSync('npx prisma db push --schema=./prisma/schema.prisma', { 
-            stdio: 'inherit',
-            cwd: process.cwd()
-          });
-          
-          console.log('✅ Database tables created successfully');
+          try {
+            console.log('🔨 Creating tables using Prisma db push...');
+            // Use Prisma db push to create tables from schema
+            execSync('npx prisma db push --schema=./prisma/schema.prisma --accept-data-loss', { 
+              stdio: 'inherit',
+              cwd: process.cwd()
+            });
+            console.log('✅ Database tables created successfully');
+          } catch (pushError) {
+            console.error('⚠️ Prisma db push failed:', pushError.message);
+            // Try using migrate deploy as final fallback
+            try {
+              console.log('🔄 Trying migrate deploy...');
+              execSync('npx prisma migrate deploy --schema=./prisma/schema.prisma', { 
+                stdio: 'inherit',
+                cwd: process.cwd()
+              });
+              console.log('✅ Database migrated successfully');
+            } catch (migrateError) {
+              console.error('❌ All database initialization methods failed');
+              throw new Error('Could not initialize database tables');
+            }
+          }
         } else {
           throw error;
         }
