@@ -13,8 +13,7 @@ import authRoutes from './api/routes/auth.routes';
 import platformRoutes from './api/routes/platform.routes';
 import agentRoutes from './api/routes/agent.routes';
 import professionalRoutes from './api/routes/professional.routes';
-// Temporarily commented out to troubleshoot 502 errors
-// import autoApplyRoutes from './api/routes/autoapply.routes';
+import autoApplyRoutes from './api/routes/autoapply.routes';
 
 // Import services
 import { AgentOrchestrator } from './agent/core/AgentOrchestrator';
@@ -23,15 +22,21 @@ import { DatabaseService } from './services/Database.service';
 // Initialize Express app
 const app: Application = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer, {
-  cors: {
-    origin: process.env.FRONTEND_URL || '*',
-    methods: ['GET', 'POST']
-  }
-});
+// Temporarily disable Socket.IO to rule out WebSocket conflicts
+// const io = new Server(httpServer, {
+//   cors: {
+//     origin: process.env.FRONTEND_URL || '*',
+//     methods: ['GET', 'POST']
+//   }
+// });
 
-// Request logging middleware
+// Request logging middleware - skip for minimal endpoint
 app.use((req, res, next) => {
+  // Skip logging for minimal endpoint to test if middleware is causing issues
+  if (req.url === '/minimal') {
+    return next();
+  }
+  
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
   console.log('Headers:', JSON.stringify(req.headers, null, 2));
   console.log('IP:', req.ip);
@@ -52,23 +57,36 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from public directory
-app.use(express.static(path.join(__dirname, '../public')));
-
-// Health check endpoint for Railway
+// Health check endpoint - Railway requires this to return 200 within 30 seconds
 app.get('/health', (req, res) => {
   console.log('Health endpoint called');
+  
+  // Log Railway-specific headers for debugging
+  console.log('X-Forwarded-For:', req.headers['x-forwarded-for']);
+  console.log('X-Forwarded-Proto:', req.headers['x-forwarded-proto']);
+  console.log('X-Real-IP:', req.headers['x-real-ip']);
+  
+  // Simple 200 response as required by Railway
+  res.status(200).send('OK');
+});
+
+// Detailed health endpoint for debugging
+app.get('/health-detailed', (req, res) => {
   const health = {
     status: 'healthy',
     version: '2.0.0',
     timestamp: new Date().toISOString(),
     pricing: '0.1% of target salary per week',
     database: 'configured',
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || 'development',
+    headers: {
+      'x-forwarded-for': req.headers['x-forwarded-for'],
+      'x-forwarded-proto': req.headers['x-forwarded-proto'],
+      'x-real-ip': req.headers['x-real-ip']
+    }
   };
 
-  console.log('Sending health response:', health);
-  res.json(health);
+  res.status(200).json(health);
 });
 
 // Simple test endpoint
@@ -77,18 +95,50 @@ app.get('/test', (req, res) => {
   res.json({ message: 'Server is responding', timestamp: new Date().toISOString() });
 });
 
-// Ping endpoint
+// Ping endpoint - very simple response
 app.get('/ping', (req, res) => {
   console.log('Ping endpoint hit');
-  res.send('pong');
+  res.setHeader('Content-Type', 'text/plain');
+  res.setHeader('Connection', 'close');
+  res.status(200).send('pong');
+});
+
+// Minimal test endpoint
+app.get('/minimal', (req, res) => {
+  console.log('Minimal endpoint hit');
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('OK');
+});
+
+// Internal network test endpoint
+app.get('/internal-test', async (req, res) => {
+  try {
+    console.log('Testing internal Railway network connectivity');
+    
+    // Test database connectivity
+    const dbTest = process.env.DATABASE_URL ? 'DB configured' : 'No DB URL';
+    
+    const result = {
+      status: 'ok',
+      timestamp: new Date().toISOString(),
+      database: dbTest,
+      environment: process.env.NODE_ENV || 'development',
+      port: process.env.PORT || '3000',
+      platform_url: process.env.PLATFORM_URL || 'not set'
+    };
+    
+    res.status(200).json(result);
+  } catch (error: any) {
+    console.error('Internal test error:', error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // API Routes - mount API routes first to avoid conflicts
 app.use('/api/auth', authRoutes);
 app.use('/api/platform', platformRoutes);
 app.use('/api/agent', agentRoutes);
-// Temporarily commented out to troubleshoot 502 errors
-// app.use('/api/autoapply', autoApplyRoutes);
+app.use('/api/autoapply', autoApplyRoutes);
 
 // API info endpoint (for programmatic access)
 app.get('/api', (req, res) => {
@@ -123,6 +173,9 @@ app.get('/', (req, res) => {
   }
 });
 
+// Serve static files from public directory - after API routes to avoid conflicts
+app.use(express.static(path.join(__dirname, '../public')));
+
 // Professional routes - mount after specific routes to avoid conflicts
 app.use('/', professionalRoutes);
 
@@ -153,19 +206,19 @@ app.use((error: any, req: any, res: any, next: any) => {
   });
 });
 
-// Socket.IO for real-time updates
-io.on('connection', (socket) => {
-  console.log('User connected:', socket.id);
+// Socket.IO for real-time updates - temporarily disabled
+// io.on('connection', (socket) => {
+//   console.log('User connected:', socket.id);
 
-  socket.on('join_user_room', (userId: string) => {
-    socket.join(`user_${userId}`);
-    console.log(`User ${userId} joined their room`);
-  });
+//   socket.on('join_user_room', (userId: string) => {
+//     socket.join(`user_${userId}`);
+//     console.log(`User ${userId} joined their room`);
+//   });
 
-  socket.on('disconnect', () => {
-    console.log('User disconnected:', socket.id);
-  });
-});
+//   socket.on('disconnect', () => {
+//     console.log('User disconnected:', socket.id);
+//   });
+// });
 
 // Error handling
 process.on('unhandledRejection', (reason, promise) => {
@@ -251,7 +304,7 @@ async function startServer() {
 
   // Always start the HTTP server for health checks
   try {
-    httpServer.listen(Number(PORT), '0.0.0.0', () => {
+    const server = httpServer.listen(Number(PORT), '0.0.0.0', () => {
       console.log('🎯 HTTP Server successfully started and listening');
       console.log(`🔗 Server binding: 0.0.0.0:${PORT}`);
       console.log(`🌐 Public URL: ${process.env.PLATFORM_URL || 'http://localhost:' + PORT}`);
@@ -259,6 +312,7 @@ async function startServer() {
       console.log('  - GET /health (health check)');
       console.log('  - GET /test (simple test)');
       console.log('  - GET /ping (ping test)');
+      console.log('  - GET /minimal (minimal test)');
       console.log('  - GET /api (API info)');
       console.log('  - GET / (main page)');
       
@@ -270,7 +324,22 @@ async function startServer() {
       }
       console.log('✅ All systems operational');
       console.log(`🌍 Server running on port ${PORT}`);
+      
+      // Signal to Railway that we're ready
+      if (process.send) {
+        process.send('ready');
+      }
     });
+    
+    // Handle server errors
+    server.on('error', (error: any) => {
+      console.error('❌ HTTP Server error:', error);
+      if (error.code === 'EADDRINUSE') {
+        console.error(`Port ${PORT} is already in use`);
+      }
+      process.exit(1);
+    });
+    
   } catch (error: any) {
     console.error('❌ Failed to start HTTP server:', error?.message || error);
     process.exit(1);
@@ -281,4 +350,4 @@ async function startServer() {
 startServer();
 
 // Export for testing
-export { app, io };
+export { app };

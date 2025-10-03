@@ -1,3 +1,6 @@
+// C-Level Hire AI Agent Platform Database Schema
+// Based on the working Apply Autonomously project structure
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,148 +11,109 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  passwordHash  String
-  firstName     String?
-  lastName      String?
-  targetSalary  Int?
-  weeklyRate    Float?
+  id              String            @id @default(uuid()) @map("user_id")
+  email           String            @unique
+  passwordHash    String?           @map("password_hash")
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @default(now()) @map("updated_at")
+  
+  // Relations
+  jobPreferences  JobPreferences?
+  profile         Profile?
+  eligibility     Eligibility?
+  screeningAnswers ScreeningAnswers[]
+  magicLinkTokens MagicLinkToken[]
+  
+  @@map("users")
+}
 
-  profile       Profile?
-  subscription  Subscription?
-  applications  Application[]
-  autoApplySettings AutoApplySettings?
+model MagicLinkToken {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  token       String   @unique
+  expiresAt   DateTime
+  usedAt      DateTime?
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("magic_link_tokens")
+}
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+model JobPreferences {
+  id                  String   @id @default(uuid())
+  userId              String   @unique
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  desired_roles       String[] // Array of desired job titles/roles
+  experience_level    String?  // entry, mid, senior, executive
+  salary_min          Int?
+  salary_max          Int?
+  location_preference String?  // remote, hybrid, onsite
+  preferred_locations String[] // Array of preferred cities/states
+  willing_to_relocate Boolean  @default(false)
+  visa_sponsorship    Boolean  @default(false)
+  
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  
+  @@map("job_preferences")
 }
 
 model Profile {
-  id              String   @id @default(uuid())
-  userId          String   @unique
-  user            User     @relation(fields: [userId], references: [id])
-
-  currentRole     String?
-  currentSalary   Int?
-  yearsExperience Int?
-  location        String?
-  linkedinUrl     String?
-  skills          String? // Changed from Json to String for SQLite compatibility
-
-  // Autoapply-specific fields
-  phone           String?
-  address         String?
-  workEligibility String?
-  resumeUrl       String?
-  coverLetter     String?
-  preferences     String? // JSON string for job preferences
+  id                String   @id @default(uuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   
-  // Profile completion tracking
-  personalInfoComplete    Boolean @default(false)
-  experienceComplete      Boolean @default(false)
-  educationComplete       Boolean @default(false)
-  skillsComplete          Boolean @default(false)
+  first_name        String?
+  last_name         String?
+  phone             String?
+  address           String?
+  linkedin_url      String?
+  website_url       String?
   
-  completionPercentage    Int @default(0)
-
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  current_title     String?
+  current_company   String?
+  years_experience  Int?
+  
+  resume_url        String?
+  cover_letter_template String?
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@map("profiles")
 }
 
-model Subscription {
-  id               String   @id @default(uuid())
-  userId           String   @unique
-  user             User     @relation(fields: [userId], references: [id])
-
-  plan             String
-  status           String
-  weeklyRate       Float
-  nextBillingDate  DateTime
-
-  stripeCustomerId String?
-
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-}
-
-model Application {
-  id            String   @id @default(uuid())
-  userId        String
-  user          User     @relation(fields: [userId], references: [id])
-
-  jobTitle      String
-  company       String
-  jobUrl        String
-  status        String
-  appliedAt     DateTime @default(now())
-
-  matchScore    Float?
-  resumeVersion String?
-  
-  // Autoapply-specific fields
-  atsType       String?
-  applicationMethod String?
-  errorMessage  String?
-  retryCount    Int @default(0)
-
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-}
-
-model AutoApplySettings {
+model Eligibility {
   id                    String   @id @default(uuid())
   userId                String   @unique
-  user                  User     @relation(fields: [userId], references: [id])
-
-  isEnabled             Boolean  @default(false)
-  maxDailyApplications  Int      @default(10)
-  targetRoles          String?   // JSON string array
-  excludedCompanies    String?   // JSON string array
-  minSalary            Int?
-  maxSalary            Int?
-  preferredLocations   String?   // JSON string array
-  remoteOnly           Boolean  @default(false)
-
-  lastScanAt           DateTime?
-  nextScanAt           DateTime?
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+  work_authorization    String?  // citizen, permanent_resident, h1b, f1_opt, etc.
+  security_clearance    String?  // none, secret, top_secret, etc.
+  felony_conviction     Boolean  @default(false)
+  drug_test_willing     Boolean  @default(true)
+  background_check_willing Boolean @default(true)
+  
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  @@map("eligibility")
 }
 
-model Job {
-  id              String   @id @default(uuid())
-  title           String
-  company         String
-  location        String?
-  salary          String?
-  description     String?
-  requirements    String?
-  url             String   @unique
-  atsType         String?
+model ScreeningAnswers {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   
-  isActive        Boolean  @default(true)
-  lastScannedAt   DateTime @default(now())
+  question  String
+  answer    String
   
-  applications    JobApplication[]
-
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-}
-
-model JobApplication {
-  id          String   @id @default(uuid())
-  jobId       String
-  job         Job      @relation(fields: [jobId], references: [id])
-  userId      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   
-  status      String   // pending, applied, failed, skipped
-  appliedAt   DateTime?
-  errorMessage String?
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  @@unique([jobId, userId])
+  @@map("screening_answers")
+  @@index([userId])
 }

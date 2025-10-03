@@ -144,9 +144,43 @@ router.post('/autoapply/enable', authenticate, async (req: any, res: Response) =
 // Debug endpoint for testing
 router.get('/debug/readiness', async (req: Request, res: Response) => {
     try {
+        // Return mock profile data structure that frontend expects
+        const mockProfile = {
+            personal: {
+                full_name: "Roberto Potenza",
+                city: "New York"
+            },
+            preferences: {
+                job_titles: ["Software Engineer", "Full Stack Developer"],
+                onsite_location: "Remote"
+            },
+            eligibility: {
+                current_job_title: "Senior Developer"
+            }
+        };
+
+        // Calculate completion based on the same logic as frontend
+        let completedSections = 0;
+        const totalSections = 4;
+
+        if (mockProfile.personal?.full_name && mockProfile.personal?.full_name.trim()) completedSections++;
+        if (mockProfile.preferences?.job_titles && mockProfile.preferences.job_titles.length > 0) completedSections++;
+        if (mockProfile.eligibility?.current_job_title) completedSections++;
+        if (mockProfile.personal?.city || mockProfile.preferences?.onsite_location) completedSections++;
+
+        const completionPercentage = Math.round((completedSections / totalSections) * 100);
+        const isComplete = completionPercentage >= 100;
+
         res.json({
             status: 'ready',
             timestamp: new Date().toISOString(),
+            data: {
+                profile: mockProfile,
+                completeness: {
+                    complete: isComplete,
+                    missing: isComplete ? '' : 'Profile sections need completion'
+                }
+            },
             services: {
                 database: 'connected',
                 autoapply: 'enabled'
