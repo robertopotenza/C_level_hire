@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Balanced Body® Stockout Dashboard</title>
+  <style>
+    :root {
+      --bb-navy: #0c213c;
+      --bb-green: #bdcc2a;
+      --bb-sage: #627884;
+      --bb-light-gray: #d8d9db;
+      --bb-text: #404040;
+      --ring-track: rgba(216, 217, 219, 0.16);
+      --ring-shadow: rgba(189, 204, 42, 0.25);
+      --glow-green: rgba(189, 204, 42, 0.18);
+      --glow-sage: rgba(98, 120, 132, 0.18);
+      --border-soft: rgba(216, 217, 219, 0.18);
+      --font-stack: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      font-family: var(--font-stack);
+      background:
+        radial-gradient(circle at 50% 38%, var(--glow-green) 0%, rgba(189, 204, 42, 0.08) 18%, transparent 40%),
+        radial-gradient(circle at 76% 18%, var(--glow-sage) 0%, transparent 28%),
+        linear-gradient(180deg, #102847 0%, var(--bb-navy) 55%, #091729 100%);
+      color: var(--bb-light-gray);
+    }
+
+    body {
+      position: relative;
+    }
+
+    .board {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 2.2vh 3vw 2vh;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      min-height: 12vh;
+    }
+
+    .logo-pill {
+      min-width: 15rem;
+      min-height: 4.5rem;
+      padding: 0.85rem 1.4rem;
+      border-radius: 999px;
+      background: rgba(248, 249, 250, 0.98);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 14px 38px rgba(0, 0, 0, 0.16);
+    }
+
+    .logo-pill img {
+      display: block;
+      max-width: min(16vw, 210px);
+      max-height: 44px;
+      object-fit: contain;
+    }
+
+    .logo-fallback {
+      display: none;
+      color: var(--bb-text);
+      font-size: clamp(1rem, 1.9vw, 1.45rem);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .department {
+      font-size: clamp(1rem, 1.75vw, 1.45rem);
+      letter-spacing: 0.22em;
+      font-weight: 500;
+      color: var(--bb-sage);
+      text-align: right;
+      text-transform: uppercase;
+    }
+
+    .live-indicator {
+      position: absolute;
+      top: 2.5vh;
+      right: 2.4vw;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.45rem 0.8rem;
+      border: 1px solid rgba(189, 204, 42, 0.2);
+      border-radius: 999px;
+      background: rgba(12, 33, 60, 0.35);
+      backdrop-filter: blur(8px);
+      color: var(--bb-light-gray);
+      font-size: 0.82rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      z-index: 5;
+    }
+
+    .live-dot {
+      width: 0.7rem;
+      height: 0.7rem;
+      border-radius: 50%;
+      background: var(--bb-green);
+      box-shadow: 0 0 0 0 rgba(189, 204, 42, 0.75);
+      animation: pulse 1.8s infinite;
+      flex: 0 0 auto;
+    }
+
+    .center-stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 0 0 3vh;
+    }
+
+    .counter-wrap {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.3rem;
+      transform-origin: center center;
+    }
+
+    .counter-wrap.bump {
+      animation: bump 640ms cubic-bezier(0.2, 0.9, 0.25, 1);
+    }
+
+    .ring-shell {
+      position: relative;
+      width: min(52vw, 580px);
+      aspect-ratio: 1 / 1;
+      display: grid;
+      place-items: center;
+      filter: drop-shadow(0 0 34px var(--ring-shadow));
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .ring-track {
+      fill: none;
+      stroke: var(--ring-track);
+      stroke-width: 18;
+    }
+
+    .ring-progress {
+      fill: none;
+      stroke: var(--bb-green);
+      stroke-width: 18;
+      stroke-linecap: round;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+      transition: stroke-dashoffset 950ms cubic-bezier(0.2, 0.9, 0.25, 1);
+    }
+
+    .count-panel {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      z-index: 2;
+    }
+
+    .days-number {
+      position: relative;
+      font-size: clamp(7rem, 14vw, 160px);
+      line-height: 0.92;
+      font-weight: 200;
+      letter-spacing: -0.06em;
+      color: #f2f4f5;
+      text-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+      min-width: 4ch;
+      text-align: center;
+    }
+
+    .days-caption {
+      font-size: clamp(1.2rem, 2.35vw, 2rem);
+      color: var(--bb-light-gray);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      text-align: center;
+    }
+
+    .days-caption strong {
+      color: var(--bb-green);
+      font-weight: 600;
+    }
+
+    .subnote {
+      font-size: clamp(0.82rem, 1.25vw, 1rem);
+      color: rgba(216, 217, 219, 0.64);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .sparkles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 4;
+    }
+
+    .sparkle {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      opacity: 0;
+      animation: sparkleFly 900ms ease-out forwards;
+      box-shadow: 0 0 16px currentColor;
+    }
+
+    .bottombar {
+      min-height: 12vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-top: 1px solid var(--border-soft);
+      text-align: center;
+      padding: 1.4rem 2rem 0.3rem;
+    }
+
+    .message {
+      font-size: clamp(1.05rem, 1.65vw, 1.45rem);
+      font-style: italic;
+      font-weight: 400;
+      color: rgba(216, 217, 219, 0.82);
+      letter-spacing: 0.01em;
+      max-width: 80ch;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.96);
+        box-shadow: 0 0 0 0 rgba(189, 204, 42, 0.75);
+      }
+      70% {
+        transform: scale(1.08);
+        box-shadow: 0 0 0 12px rgba(189, 204, 42, 0);
+      }
+      100% {
+        transform: scale(0.96);
+        box-shadow: 0 0 0 0 rgba(189, 204, 42, 0);
+      }
+    }
+
+    @keyframes bump {
+      0% { transform: scale(1); }
+      28% { transform: scale(1.085); }
+      55% { transform: scale(0.985); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes sparkleFly {
+      0% {
+        transform: translate(-50%, -50%) scale(0.2);
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
+        opacity: 0;
+      }
+    }
+
+    @media (max-aspect-ratio: 16/9) {
+      .ring-shell {
+        width: min(68vh, 74vw);
+      }
+
+      .topbar,
+      .bottombar {
+        min-height: 11vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="live-indicator">
+    <span class="live-dot"></span>
+    <span>Live</span>
+  </div>
+
+  <main class="board">
+    <header class="topbar">
+      <div class="logo-pill">
+        <img id="logoImage" src="./BB_logo.png" alt="Balanced Body logo" />
+        <span id="logoFallback" class="logo-fallback">Balanced Body®</span>
+      </div>
+      <div class="department">Procurement &amp; Supply Chain</div>
+    </header>
+
+    <section class="center-stage">
+      <div id="counterWrap" class="counter-wrap">
+        <div class="ring-shell">
+          <svg viewBox="0 0 360 360" aria-hidden="true">
+            <circle class="ring-track" cx="180" cy="180" r="158"></circle>
+            <circle id="ringProgress" class="ring-progress" cx="180" cy="180" r="158"></circle>
+          </svg>
+
+          <div class="count-panel">
+            <div id="daysNumber" class="days-number">0</div>
+            <div id="sparkles" class="sparkles"></div>
+            <div class="subnote">Current Streak</div>
+          </div>
+        </div>
+
+        <div class="days-caption">Consecutive Days <strong>Without Stockout</strong></div>
+      </div>
+    </section>
+
+    <footer class="bottombar">
+      <div id="messageText" class="message"></div>
+    </footer>
+  </main>
+
+  <script>
+    const LOCAL_STATE = {
+      mode: 'auto',
+      streakStartDate: '2026-02-26',
+      days: 42,
+      maxDays: 100,
+      message: 'Disciplined planning keeps the floor moving and customers supported.',
+      updatedAt: '2026-04-08T00:00:00Z'
+    };
+
+    const state = {
+      days: 0,
+      maxDays: 100,
+      message: '',
+      updatedAt: null
+    };
+
+    const daysNumberEl = document.getElementById('daysNumber');
+    const messageEl = document.getElementById('messageText');
+    const ringProgressEl = document.getElementById('ringProgress');
+    const counterWrapEl = document.getElementById('counterWrap');
+    const sparklesEl = document.getElementById('sparkles');
+    const logoImageEl = document.getElementById('logoImage');
+    const logoFallbackEl = document.getElementById('logoFallback');
+
+    const RADIUS = 158;
+    const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+    ringProgressEl.style.strokeDasharray = String(CIRCUMFERENCE);
+
+    function calculateDaysFromDate(dateText) {
+      if (!dateText) {
+        return null;
+      }
+
+      const startDate = new Date(dateText + 'T00:00:00');
+      if (Number.isNaN(startDate.getTime())) {
+        return null;
+      }
+
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+      const millisecondsPerDay = 24 * 60 * 60 * 1000;
+      return Math.max(0, Math.floor((today - start) / millisecondsPerDay));
+    }
+
+    function normalizePayload(payload) {
+      const mode = payload?.mode === 'manual' ? 'manual' : 'auto';
+      const startDate = typeof payload?.streakStartDate === 'string' ? payload.streakStartDate : null;
+      const manualDays = Number(payload?.days ?? 0);
+      const derivedDays = mode === 'auto' ? calculateDaysFromDate(startDate) : null;
+      const days = derivedDays ?? (Number.isFinite(manualDays) ? Math.max(0, Math.floor(manualDays)) : 0);
+      const maxDays = Math.max(1, Number(payload?.maxDays ?? 100));
+      const message = String(payload?.message ?? LOCAL_STATE.message);
+      const updatedAt = payload?.updatedAt ?? null;
+
+      return {
+        days,
+        maxDays: Number.isFinite(maxDays) ? Math.floor(maxDays) : 100,
+        message,
+        updatedAt
+      };
+    }
+
+    function render(payload, previousDays = state.days) {
+      const next = normalizePayload(payload);
+      const ratio = Math.min(next.days, next.maxDays) / next.maxDays;
+      const dashOffset = CIRCUMFERENCE * (1 - ratio);
+
+      daysNumberEl.textContent = String(next.days);
+      messageEl.textContent = next.message;
+      ringProgressEl.style.strokeDashoffset = String(dashOffset);
+
+      if (next.days > previousDays) {
+        counterWrapEl.classList.remove('bump');
+        void counterWrapEl.offsetWidth;
+        counterWrapEl.classList.add('bump');
+        fireSparkles();
+      }
+
+      Object.assign(state, next);
+    }
+
+    function fireSparkles() {
+      sparklesEl.innerHTML = '';
+      const colors = ['#BDCC2A', '#D8D9DB', '#627884', '#EEF5AF'];
+      const particleCount = 20;
+
+      for (let index = 0; index < particleCount; index += 1) {
+        const particle = document.createElement('span');
+        const angle = (Math.PI * 2 * index) / particleCount + (Math.random() * 0.35);
+        const distance = 70 + Math.random() * 120;
+        const size = 6 + Math.random() * 8;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+
+        particle.className = 'sparkle';
+        particle.style.setProperty('--tx', tx + 'px');
+        particle.style.setProperty('--ty', ty + 'px');
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.color = colors[index % colors.length];
+        particle.style.background = colors[(index + 1) % colors.length];
+        particle.style.animationDelay = (Math.random() * 120) + 'ms';
+
+        sparklesEl.appendChild(particle);
+      }
+
+      window.setTimeout(() => {
+        sparklesEl.innerHTML = '';
+      }, 1100);
+    }
+
+    async function fetchState() {
+      const sources = ['/api/state', './stockout-state.json'];
+
+      for (const source of sources) {
+        try {
+          const response = await fetch(source, { cache: 'no-store' });
+          if (!response.ok) {
+            throw new Error('State source unavailable');
+          }
+
+          const payload = await response.json();
+          render(payload, state.days);
+          return;
+        } catch (error) {
+          // Try the next source.
+        }
+      }
+
+      render(LOCAL_STATE, state.days);
+    }
+
+    function handleLogoFallback() {
+      logoImageEl.addEventListener('error', () => {
+        logoImageEl.style.display = 'none';
+        logoFallbackEl.style.display = 'inline-block';
+      });
+    }
+
+    handleLogoFallback();
+    render(LOCAL_STATE, 0);
+    fetchState();
+    window.setInterval(fetchState, 4000);
+  </script>
+</body>
+</html>
