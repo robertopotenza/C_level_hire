@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Embedded Balanced Body® Stockout Dashboard</title>
+  <style>
+    :root {
+      --bb-navy: #0c213c;
+      --bb-green: #bdcc2a;
+      --bb-sage: #627884;
+      --bb-light-gray: #d8d9db;
+      --panel: #122a47;
+      --border: rgba(216, 217, 219, 0.16);
+      --shadow: rgba(0, 0, 0, 0.28);
+      --font-stack: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      font-family: var(--font-stack);
+      background:
+        radial-gradient(circle at top, rgba(189, 204, 42, 0.14), transparent 28%),
+        linear-gradient(180deg, #102847 0%, var(--bb-navy) 100%);
+      color: var(--bb-light-gray);
+    }
+
+    body {
+      padding: 24px;
+    }
+
+    .page {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      padding: 8px 4px;
+    }
+
+    .header-copy h1 {
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .header-copy p {
+      max-width: 70ch;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(216, 217, 219, 0.82);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border: 1px solid rgba(189, 204, 42, 0.28);
+      border-radius: 999px;
+      background: rgba(18, 42, 71, 0.72);
+      white-space: nowrap;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .badge-dot {
+      width: 0.7rem;
+      height: 0.7rem;
+      border-radius: 50%;
+      background: var(--bb-green);
+      box-shadow: 0 0 0 0 rgba(189, 204, 42, 0.75);
+      animation: pulse 1.8s infinite;
+    }
+
+    .frame-shell {
+      background: rgba(18, 42, 71, 0.88);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 0 22px 50px var(--shadow);
+      overflow: hidden;
+    }
+
+    .frame-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      color: rgba(216, 217, 219, 0.84);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .frame-topbar span {
+      font-size: 0.92rem;
+      letter-spacing: 0.04em;
+    }
+
+    .open-link {
+      color: var(--bb-green);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .open-link:hover {
+      text-decoration: underline;
+    }
+
+    .dashboard-frame {
+      display: block;
+      width: 100%;
+      height: min(78vh, 980px);
+      border: 0;
+      background: var(--bb-navy);
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.96);
+        box-shadow: 0 0 0 0 rgba(189, 204, 42, 0.75);
+      }
+      70% {
+        transform: scale(1.08);
+        box-shadow: 0 0 0 12px rgba(189, 204, 42, 0);
+      }
+      100% {
+        transform: scale(0.96);
+        box-shadow: 0 0 0 0 rgba(189, 204, 42, 0);
+      }
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 14px;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: start;
+      }
+
+      .dashboard-frame {
+        height: 72vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="header">
+      <div class="header-copy">
+        <h1>Balanced Body® Stockout Dashboard</h1>
+        <p>This page embeds the permanently hosted procurement KPI screen so it can be viewed inside another webpage, portal, or shared browser page without changing the live dashboard source.</p>
+      </div>
+      <div class="badge">
+        <span class="badge-dot"></span>
+        <span>Embedded Live View</span>
+      </div>
+    </section>
+
+    <section class="frame-shell">
+      <div class="frame-topbar">
+        <span>Embedded source: /dashboard.html</span>
+        <a class="open-link" href="./dashboard.html" target="_blank" rel="noopener noreferrer">Open full dashboard</a>
+      </div>
+      <iframe
+        class="dashboard-frame"
+        src="./dashboard.html"
+        title="Balanced Body Stockout Dashboard"
+        loading="eager"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </section>
+  </main>
+</body>
+</html>
