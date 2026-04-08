@@ -1,0 +1,8 @@
+Place the Balanced Body logo file here as:
+
+BB_logo.png
+
+Expected path:
+client/public/BB_logo.png
+
+The dashboard already references this filename and will automatically show it once added.
